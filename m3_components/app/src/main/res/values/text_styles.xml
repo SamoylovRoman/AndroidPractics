@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="M3Text" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/proxima_nova</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+    <style name="M3Text.boldAndBig">
+        <item name="fontFamily">@font/proxima_nova_bold</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="M3Text.bigDigits" parent="M3Text.boldAndBig">
+        <item name="android:textSize">100sp</item>
+    </style>
+
+
+</resources>
