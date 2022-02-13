@@ -7,11 +7,12 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textTitle"
         style="@style/M3Text.boldAndBig"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
+        android:gravity="center"
         android:text="@string/text_view_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +23,12 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:indeterminate="false"
-        android:progress="100"
         app:indicatorSize="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/slider"
+        app:layout_constraintBottom_toTopOf="@+id/sliderTimer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle"
+        app:trackColor="@color/gray"
         app:trackThickness="20dp"
         tools:progress="80" />
 
@@ -43,14 +44,12 @@
         app:layout_constraintTop_toTopOf="@+id/circularProgress"
         tools:text="20" />
 
-
     <com.google.android.material.slider.Slider
-        android:id="@+id/slider"
+        android:id="@+id/sliderTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
         android:stepSize="10"
-        android:value="10"
         android:valueFrom="10"
         android:valueTo="60"
         app:layout_constraintBottom_toTopOf="@+id/buttonStart"
@@ -60,12 +59,12 @@
     <Button
         android:id="@+id/buttonStart"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.m3"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="@string/button_text_start"
+        android:layout_margin="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/button_text_start" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
