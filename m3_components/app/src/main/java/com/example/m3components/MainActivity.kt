@@ -2,53 +2,75 @@ package com.example.m3components
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.example.m3components.databinding.ActivityMainBinding
-
-
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-//    private var currentProgress: Int = 10
     private var isStarted = false
+    private var timerValue: Int = 10
+    private var indicatorProgress: Int = 100
+    private lateinit var binding: ActivityMainBinding
+    private var jobTimer: Job? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setStartValues()
+        initListeners()
+    }
 
-        fun startTimer() {
-
-            if (isStarted) {
-                binding.slider.isEnabled = false
-                binding.buttonStart.setText(R.string.button_text_stop)
-                for (i in binding.slider.value.toInt() downTo 0) {
-                    binding.textInside.text = i.toString()
-                    Thread.sleep(1000)
-                }
-            } else {
-                binding.slider.isEnabled = false
-                binding.textInside.text = binding.slider.value.toInt().toString()
-                binding.buttonStart.setText(R.string.button_text_start)
+    private fun startTimer() {
+        binding.sliderTimer.isEnabled = false
+        binding.buttonStart.setText(R.string.button_text_stop)
+        jobTimer = lifecycleScope.launch {
+            for (sec in timerValue - 1 downTo 0) {
+                binding.textInside.text = sec.toString()
+                binding.circularProgress.progress -= indicatorProgress / timerValue
+                delay(100)
             }
+            Toast.makeText(applicationContext, "Timer task finished", Toast.LENGTH_SHORT).show()
+            setStartValues()
         }
+    }
 
-        binding.slider.addOnChangeListener { slider, value, fromUser ->
+    private fun stopTimer() {
+        jobTimer?.cancel()
+        Toast.makeText(applicationContext, "Timer task finished", Toast.LENGTH_SHORT).show()
+        setStartValues()
+    }
+
+    private fun setStartValues() {
+        isStarted = false
+        with(binding) {
+            buttonStart.setText(R.string.button_text_start)
+            sliderTimer.isEnabled = true
+            sliderTimer.value = timerValue.toFloat()
+            textInside.text = timerValue.toString()
+            circularProgress.progress = indicatorProgress
+        }
+    }
+
+    private fun initListeners() {
+        binding.sliderTimer.addOnChangeListener { _, value, _ ->
             binding.textInside.text = value.toInt().toString()
-
         }
-
 
         binding.buttonStart.setOnClickListener {
-
             if (!isStarted) {
                 isStarted = true
+                timerValue = binding.sliderTimer.value.toInt()
                 startTimer()
             } else {
                 isStarted = false
-                startTimer()
+                stopTimer()
             }
         }
-
-
     }
 }
