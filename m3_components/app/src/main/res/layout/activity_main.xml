@@ -23,12 +23,12 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:indeterminate="false"
-        app:trackColor="@color/gray"
         app:indicatorSize="200dp"
         app:layout_constraintBottom_toTopOf="@+id/sliderTimer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textTitle"
+        app:trackColor="@color/gray"
         app:trackThickness="20dp"
         tools:progress="80" />
 
@@ -62,9 +62,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        tools:text="@string/button_text_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/button_text_start" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
