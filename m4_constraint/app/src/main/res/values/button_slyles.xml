@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<style name="Base.Widget.AppCompat.ImageButton.m4">
+    <item name="backgroundTint">@color/black</item>
+</style>
+
+</resources>

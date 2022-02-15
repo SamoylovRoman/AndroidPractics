@@ -7,50 +7,47 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageOfAlbum"
+        android:id="@+id/imageAlbum"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHeight_max="300dp"
         android:layout_margin="16dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/rap_album_img"
+        android:scaleType="centerInside"
+        android:src="@drawable/img_tmp_album_preview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/skipPrevious"
+        android:id="@+id/buttonPrevious"
+        style="@style/Base.Widget.AppCompat.ImageButton.m4"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/ic_baseline_skip_previous_24"
-        android:backgroundTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/playButton"
-        app:layout_constraintEnd_toStartOf="@id/playButton"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/playButton" />
+        android:background="@drawable/ic_previous_button"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
+        app:layout_constraintEnd_toStartOf="@id/buttonPlay"
+        app:layout_constraintTop_toTopOf="@+id/buttonPlay" />
 
     <ImageButton
-        android:id="@+id/playButton"
+        android:id="@+id/buttonPlay"
+        style="@style/Base.Widget.AppCompat.ImageButton.m4"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/ic_baseline_play_circle_filled_24"
-        android:backgroundTint="@color/black"
+        android:background="@drawable/ic_play_circle_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageOfAlbum" />
+        app:layout_constraintTop_toBottomOf="@+id/imageAlbum" />
 
     <ImageButton
-        android:id="@+id/skipNext"
+        android:id="@+id/buttonNext"
+        style="@style/Base.Widget.AppCompat.ImageButton.m4"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/ic_baseline_skip_next_24"
-        android:backgroundTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/playButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@id/playButton"
-        app:layout_constraintTop_toTopOf="@+id/playButton" />
+        android:background="@drawable/ic_next_button"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
+        app:layout_constraintStart_toEndOf="@id/buttonPlay"
+        app:layout_constraintTop_toTopOf="@+id/buttonPlay" />
 
     <TextView
         android:id="@+id/textAuthor"
@@ -60,7 +57,7 @@
         android:text="@string/text_author"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
     <TextView
         android:id="@+id/textTitle"
