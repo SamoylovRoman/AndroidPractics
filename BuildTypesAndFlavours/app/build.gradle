@@ -7,6 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
+        manifestPlaceholders = [hostName: "www.example.com"]
         applicationId "com.example.buildtypesandflavours"
         minSdk 24
         targetSdk 31
@@ -20,14 +21,41 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            applicationIdSuffix ".debug"
+        }
+
+        qa {
+            initWith debug
+            applicationIdSuffix ".qa"
         }
     }
+
+    flavorDimensions "type"
+
+    productFlavors {
+        paid {
+            applicationIdSuffix ".paid"
+            dimension "type"
+        }
+        free {
+            applicationIdSuffix ".free"
+            dimension "type"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 }
 
