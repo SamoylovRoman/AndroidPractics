@@ -1,6 +1,0 @@
-<resources>
-    <!-- Land orientation application theme. -->
-    <style name="Theme.BuildTypesAndFlavours.land" parent="Theme.BuildTypesAndFlavours">
-        <item name="android:windowBackground">@color/gray</item>
-    </style>
-</resources>
