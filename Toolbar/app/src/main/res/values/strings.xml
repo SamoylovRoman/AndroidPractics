@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Toolbar app</string>
+    <string name="text_long_text">This is very long text. Too many letters. And we need a bit more. This is very long text./n Too many letters. And we need a bit more. \n This is very long text./n Too many letters. And we need a bit more. \n</string>
+    <string name="text_navigation_clicked">Navigation clicked!</string>
+    <string name="menu_item_1">Item 1</string>
+    <string name="menu_item_2">Item 2</string>
+    <string name="menu_item_3">Item 3</string>
+</resources>
