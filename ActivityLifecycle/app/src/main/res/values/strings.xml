@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ActivityLifecycle</string>
+    <string name="caption_text">Input your e-mail and password:</string>
+    <string name="hint_input_email">your e-mail</string>
+    <string name="hint_input_password">your password</string>
+    <string name="text_agree">I agreed!</string>
+    <string name="text_log_in">Log in</string>
+    <string name="text_logged_correctly">You logged correctly!</string>
+</resources>
