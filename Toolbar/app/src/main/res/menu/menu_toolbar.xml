@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/menu_item_1" />
-    <item android:title="@string/menu_item_2" />
-    <item android:title="@string/menu_item_3" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/menuItemSearch"
+        android:icon="@drawable/ic_search"
+        android:title="@string/menu_item_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/menuItemSimple"
+        android:title="@string/menu_item_simple" />
+    <item
+        android:id="@+id/menuItemInfo"
+        android:icon="@drawable/ic_info"
+        android:title="@string/menu_item_info"
+        app:showAsAction="ifRoom" />
 </menu>
