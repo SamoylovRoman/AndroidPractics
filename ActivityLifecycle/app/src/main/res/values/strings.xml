@@ -5,5 +5,7 @@
     <string name="hint_input_password">your password</string>
     <string name="text_agree">I agreed!</string>
     <string name="text_log_in">Log in</string>
-    <string name="text_logged_correctly">You logged correctly!</string>
+    <string name="text_simulation_ANR">Simulation ANR</string>
+    <string name="text_logged_correctly">You are logged in correctly</string>
+    <string name="text_logged_wrong">Wrong pair e-mail and password</string>
 </resources>

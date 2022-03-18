@@ -29,6 +29,17 @@
             tools:ignore="ContentDescription"
             tools:src="@tools:sample/avatars" />
 
+
+        <TextView
+            android:id="@+id/textViewValid"
+            style="@style/ViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewTopPicture"
+            tools:text="Login validation" />
+
         <TextView
             android:id="@+id/textViewCaption"
             style="@style/ViewStyle"
@@ -37,7 +48,7 @@
             android:text="@string/caption_text"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewTopPicture" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewValid" />
 
         <EditText
             android:id="@+id/editTextLogin"
@@ -47,6 +58,7 @@
             android:autofillHints="Enter user's login"
             android:hint="@string/hint_input_email"
             android:inputType="textEmailAddress"
+            android:minHeight="48dp"
             app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.5"
@@ -62,6 +74,7 @@
             android:autofillHints="Enter user's password"
             android:hint="@string/hint_input_password"
             android:inputType="textPassword"
+            android:minHeight="48dp"
             app:layout_constraintBottom_toTopOf="@+id/checkBoxAgree"
             app:layout_constraintEnd_toEndOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.5"
@@ -93,6 +106,15 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/checkBoxAgree" />
+
+        <Button
+            android:id="@+id/buttonSimulationANR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_simulation_ANR"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/buttonLogIn" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
