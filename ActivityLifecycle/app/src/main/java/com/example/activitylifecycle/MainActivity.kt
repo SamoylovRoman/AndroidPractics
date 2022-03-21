@@ -8,7 +8,6 @@ import android.os.Looper
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import androidx.core.graphics.toColorInt
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.example.activitylifecycle.databinding.ActivityMainBinding
@@ -28,6 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(tag, "onCreate ${hashCode()}")
 
+        restoreState(savedInstanceState)
+        uploadImage()
+        initListeners()
+    }
+
+    private fun restoreState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             state = savedInstanceState.getParcelable<FormState>(KEY_VALID)
                 ?: error("Unexpected state")
@@ -35,9 +40,6 @@ class MainActivity : AppCompatActivity() {
             binding.textViewValid.setTextColor(state.color)
             binding.textViewValid.text = state.message
         }
-
-        uploadImage()
-        initListeners()
     }
 
     override fun onStart() {
@@ -94,16 +96,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /* construction Patterns.EMAIL_ADDRESS.matcher(str).matches() checks
+    * string str. If str is e-mail return true, else return false */
     private fun checkEmailValid(str: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(str).matches()
     }
 
     private fun checkPassValid(str: String): Boolean {
-        return str.length > 6
+        return str.length > PASSWORD_LENGTH
     }
 
     private fun simulateANR() {
-        Thread.sleep(10000)
+        Thread.sleep(ANR_DELAY_MILE_SECOND)
     }
 
     private fun showProgressBar() {
@@ -122,36 +126,27 @@ class MainActivity : AppCompatActivity() {
             constraintContainer.addView(view)
             Handler(Looper.getMainLooper()).postDelayed({
                 constraintContainer.removeView(view)
-                updateValidText()
+                updateStateText()
                 resetEnabled(true, editTextLogin, editTextPassword, checkBoxAgree, buttonLogIn)
             }, 2000)
         }
-
     }
 
-    private fun updateValidText() {
+    private fun updateStateText() {
         if (checkEmailValid(binding.editTextLogin.text.toString())
             && checkPassValid(binding.editTextPassword.text.toString())
         ) {
-            state = state.setValid()
+            state = state.setValidState()
             Log.d(tag, "updateValidText -> ${state.message}")
-            binding.textViewValid.setTextColor(Color.GREEN)
-            binding.textViewValid.text = getString(R.string.text_logged_correctly)
+            binding.textViewValid.setTextColor(state.color)
+            binding.textViewValid.text = state.message
         } else {
-            state = state.setNotValid()
+            state = state.setInvalidState()
             Log.d(tag, "updateValidText -> ${state.message}")
-            binding.textViewValid.setTextColor(Color.RED)
-            binding.textViewValid.text = getString(R.string.text_logged_wrong)
+            binding.textViewValid.setTextColor(state.color)
+            binding.textViewValid.text = state.message
         }
     }
-
-/*    private fun showToast() {
-        Toast.makeText(
-            applicationContext,
-            getString(R.string.text_logged_correctly),
-            Toast.LENGTH_SHORT
-        ).show()
-    }*/
 
     private fun resetEnabled(state: Boolean, vararg views: View) {
         views.forEach {
@@ -172,6 +167,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val ANR_DELAY_MILE_SECOND: Long = 10000
+        private const val PASSWORD_LENGTH = 6
         private const val KEY_VALID = "valid"
         private const val URL_PATH =
             "https://www.pngkit.com/png/full/281-2812821_user-account-management-logo-user-icon-png.png"
