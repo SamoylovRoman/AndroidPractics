@@ -23,14 +23,14 @@ data class FormState(
 
     fun setValidState(): FormState {
         return copy(
-            valid = true, message = "login and password are correct!",
+            valid = true, message = "You are logged in correctly",
             color = Color.GREEN
         )
     }
 
     fun setInvalidState(): FormState {
         return copy(
-            valid = false, message = "login or password is wrong!",
+            valid = false, message = "Wrong pair e-mail and password",
             color = Color.RED
         )
     }
