@@ -1,6 +1,5 @@
 package com.example.activitylifecycle
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private var passwordIsReady = false
     private var agreeIsReady = false
     private val tag = "Activity lifecycle LOG"
-    private var state: FormState = FormState(false, "", Color.BLACK)
+    private var state: FormState = FormState.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +35,9 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             state = savedInstanceState.getParcelable<FormState>(KEY_VALID)
                 ?: error("Unexpected state")
-            Log.d(tag, state.message)
+            Log.d(tag, getString(state.message))
             binding.textViewValid.setTextColor(state.color)
-            binding.textViewValid.text = state.message
+            binding.textViewValid.setText(state.message)
         }
     }
 
@@ -96,13 +95,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* construction Patterns.EMAIL_ADDRESS.matcher(str).matches() checks
-    * string str. If str is e-mail return true, else return false */
-    private fun checkEmailValid(str: String): Boolean {
+    /* If str is e-mail return true */
+    private fun islValid(str: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(str).matches()
     }
 
-    private fun checkPassValid(str: String): Boolean {
+    private fun isValid(str: String): Boolean {
         return str.length > PASSWORD_LENGTH
     }
 
@@ -133,18 +131,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateStateText() {
-        if (checkEmailValid(binding.editTextLogin.text.toString())
-            && checkPassValid(binding.editTextPassword.text.toString())
+        if (islValid(binding.editTextLogin.text.toString())
+            && isValid(binding.editTextPassword.text.toString())
         ) {
-            state = state.setValidState()
+            state = state.getValidState()
             Log.d(tag, "updateValidText -> ${state.message}")
             binding.textViewValid.setTextColor(state.color)
-            binding.textViewValid.text = state.message
+            binding.textViewValid.setText(state.message)
         } else {
-            state = state.setInvalidState()
+            state = state.getInvalidState()
             Log.d(tag, "updateValidText -> ${state.message}")
             binding.textViewValid.setTextColor(state.color)
-            binding.textViewValid.text = state.message
+            binding.textViewValid.setText(state.message)
         }
     }
 

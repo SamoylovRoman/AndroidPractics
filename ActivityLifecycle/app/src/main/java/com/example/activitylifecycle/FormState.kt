@@ -1,37 +1,32 @@
 package com.example.activitylifecycle
 
 import android.graphics.Color
-import android.graphics.Color.BLACK
-import android.os.Parcel
 import android.os.Parcelable
-import androidx.core.graphics.toColorInt
+import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
-
 
 @Parcelize
 data class FormState(
     val valid: Boolean,
-    val message: String,
+    @StringRes val message: Int,
     val color: Int
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readByte() != 0.toByte(),
-        parcel.readString().toString(),
-        parcel.readString()!!.toInt()
-    ) {
-    }
 
-    fun setValidState(): FormState {
-        return copy(
-            valid = true, message = "You are logged in correctly",
-            color = Color.GREEN
-        )
-    }
+    fun getValidState(): FormState = FormState(
+        valid = true, message = R.string.text_logged_correctly,
+        color = Color.GREEN
+    )
 
-    fun setInvalidState(): FormState {
-        return copy(
-            valid = false, message = "Wrong pair e-mail and password",
-            color = Color.RED
+    fun getInvalidState(): FormState = FormState(
+        valid = false, message = R.string.text_logged_wrong,
+        color = Color.RED
+    )
+
+    companion object {
+        val EMPTY = FormState(
+            valid = false,
+            message = R.string.text_empty,
+            color = Color.BLACK
         )
     }
 }
