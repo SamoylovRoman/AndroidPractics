@@ -3,7 +3,6 @@
     package="com.example.intents">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -25,8 +24,8 @@
 
                 <data
                     android:host="go.skillbox.ru"
-                    android:pathPrefix="/education/"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    android:pathPrefix="/education/" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

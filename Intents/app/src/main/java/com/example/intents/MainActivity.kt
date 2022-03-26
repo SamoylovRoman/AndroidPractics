@@ -1,6 +1,6 @@
 package com.example.intents
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         initListeners()
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun initListeners() {
         binding.buttonToMakeDial.setOnClickListener {
             if (checkPhoneNumber(binding.editTextPhoneNumber.text.toString())) {
@@ -39,8 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* construction Patterns.PHONE.matcher(str).matches() checks
-    * string str. If str is phone number return true, else return false */
+    /* If str is phone number return true, else return false */
     private fun checkPhoneNumber(str: String): Boolean {
         return Patterns.PHONE.matcher(str).matches()
     }

@@ -1,5 +1,6 @@
 package com.example.intents
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.intents.databinding.ActivityDeepLinkBinding
@@ -14,9 +15,16 @@ class DeepLinkActivity : AppCompatActivity() {
         handleIntentData()
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent!!.data?.lastPathSegment?.let { endOfURL ->
+            binding.textViewDeepLink.text = endOfURL
+        }
+    }
+
     private fun handleIntentData() {
-        intent.data?.lastPathSegment?.let {
-            binding.textViewDeepLink.text = it
+        intent.data?.lastPathSegment?.let { endOfURL ->
+            binding.textViewDeepLink.text = endOfURL
         }
     }
 }
