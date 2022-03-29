@@ -2,12 +2,11 @@ package com.example.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.fragments.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), LoginButtonClickListener {
+class MainActivity : AppCompatActivity(), ActivityNavigator {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,26 +23,10 @@ class MainActivity : AppCompatActivity(), LoginButtonClickListener {
         }
     }
 
-    override fun onBackPressed() {
-        supportFragmentManager.fragments.forEach {
-            Log.d("onBackPressed", it.toString())
+    override fun showMainFragment() {
+        supportFragmentManager.commit {
+            replace<MainFragment>(R.id.fragmentContainer)
+            addToBackStack(MainFragment::class.java.simpleName)
         }
-        super.onBackPressed()
-        supportFragmentManager.fragments.forEach {
-            Log.d("onBackPressed after", it.toString())
-        }
-    }
-
-    override fun onButtonClicked(arg: String) {
-        if (arg == ARG_TO_SHOW_MAIN_FRAGMENT) {
-            supportFragmentManager.commit {
-                replace<MainFragment>(R.id.fragmentContainer)
-                addToBackStack(MainFragment::class.java.simpleName)
-            }
-        }
-    }
-
-    companion object {
-        const val ARG_TO_SHOW_MAIN_FRAGMENT = "Main Fragment"
     }
 }

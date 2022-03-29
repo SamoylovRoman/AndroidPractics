@@ -70,16 +70,16 @@ class LoginFragment : Fragment() {
             Handler(Looper.getMainLooper()).postDelayed({
                 constraintContainer.removeView(view)
                 updateStateText()
-                tryToLogin()
+                if (state.valid) {
+                    logIn()
+                }
                 resetEnabled(true, editTextLogin, editTextPassword, checkBoxAgree, buttonLogIn)
             }, DELAY_FOR_PROGRESS_BAR)
         }
     }
 
-    private fun tryToLogin() {
-        if (state.valid) {
-            (activity as? LoginButtonClickListener)?.onButtonClicked(MainActivity.ARG_TO_SHOW_MAIN_FRAGMENT)
-        }
+    private fun logIn() {
+        (activity as? ActivityNavigator)?.showMainFragment()
     }
 
     private fun updateStateText() {

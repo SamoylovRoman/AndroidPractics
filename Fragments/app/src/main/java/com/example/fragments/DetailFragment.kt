@@ -12,16 +12,16 @@ class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private var param1: String? = null
-    private var param2: String? = null
-    private var param3: String? = null
+    private var paramImageLink: String? = null
+    private var paramFullName: String? = null
+    private var paramDescriptionName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(MainFragment.ARG_IMAGE_LINK)
-            param2 = it.getString(MainFragment.ARG_FULL_NAME)
-            param3 = it.getString(MainFragment.ARG_DESCRIPTION_TEXT)
+            paramImageLink = it.getString(MainFragment.ARG_IMAGE_LINK)
+            paramFullName = it.getString(MainFragment.ARG_FULL_NAME)
+            paramDescriptionName = it.getString(MainFragment.ARG_DESCRIPTION_TEXT)
         }
     }
 
@@ -36,8 +36,8 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.detailImage.setImageDrawable(R.drawable.png_log_in.toDrawable())
-        binding.detailFullName.text = param2
-        binding.detailDescription.text = param3
+        binding.detailFullName.text = paramFullName
+        binding.detailDescription.text = paramDescriptionName
     }
 
     override fun onDestroyView() {

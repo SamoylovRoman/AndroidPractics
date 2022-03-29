@@ -30,8 +30,8 @@ class ListFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun createListItems() {
-        (1..N_OF_ITEMS).forEach {
-            with(binding) {
+        with(binding) {
+            (1..NUMBER_OF_ITEMS).forEach {
                 val customItemView =
                     layoutInflater.inflate(R.layout.item_list, listItemsContainer, false)
                 customItemView.findViewById<TextView>(R.id.fullName).text =
@@ -67,6 +67,6 @@ class ListFragment : Fragment() {
     }
 
     companion object {
-        private const val N_OF_ITEMS = 10
+        private const val NUMBER_OF_ITEMS = 10
     }
 }

@@ -23,7 +23,7 @@ class MainFragment : Fragment(), ItemSelectListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater)
-        if (savedInstanceState == null) showListFragment()
+        showListFragment()
         return binding.root
     }
 
