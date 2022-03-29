@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Fragments</string>
+    <string name="caption_text">Input your e-mail and password:</string>
+    <string name="hint_input_email">your e-mail</string>
+    <string name="hint_input_password">your password</string>
+    <string name="text_agree">I agreed!</string>
+    <string name="text_log_in">Log in</string>
+    <string name="text_simulation_ANR">Simulation ANR</string>
+    <string name="text_logged_correctly">You are logged in correctly</string>
+    <string name="text_logged_wrong">Wrong pair e-mail and password</string>
+    <string name="text_call">Dial</string>
+    <string name="text_hint_enter_phone_number">Enter phone number</string>
+    <string name="text_incorrect_phone_number">Phone number is not correct</string>
+    <string name="text_no_required_app">No required application!</string>
+    <string name="text_empty">""</string>
+    <string name="text_no_data">No data to process</string>
+    <string name="text_data">Have data to process</string>
+    <string name="text_caption">Deep link activity found link:</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_list_button_1">List button 1</string>
+    <string name="text_list_button_2">List button 2</string>
+    <string name="text_list_button_3">List button 3</string>
+    <string name="text_list_button_4">List button 4</string>
+    <string name="text_list_button_5">List button 5</string>
+    <string name="text_full_name">Denis Sannikov</string>
+    <string name="text_long">Денис Санников. Разрабочитк на Андроид с уоптыом уже более трех лет. Работал в таких организациях, как. Тут пречислены куча организаций и заслуг сотрудника, которых он добился в своей карьере..</string>
+    <string name="text_example">Text from list fragment</string>
+    <string name="text_example_full_name">Full name example</string>
+</resources>
