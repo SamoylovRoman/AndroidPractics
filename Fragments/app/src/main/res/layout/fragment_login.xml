@@ -59,7 +59,7 @@
             android:hint="@string/hint_input_email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-            android:text="email@mai.ru"
+            android:text="@string/sample_email"
             app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.5"
@@ -69,7 +69,6 @@
 
         <EditText
             android:id="@+id/editTextPassword"
-            android:text="1223245tewtwe"
             style="@style/ViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -77,6 +76,7 @@
             android:hint="@string/hint_input_password"
             android:inputType="textPassword"
             android:minHeight="48dp"
+            android:text="@string/sample_pass"
             app:layout_constraintBottom_toTopOf="@+id/checkBoxAgree"
             app:layout_constraintEnd_toEndOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.5"
@@ -85,11 +85,11 @@
 
         <CheckBox
             android:id="@+id/checkBoxAgree"
-            android:checked="true"
             style="@style/ViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:checked="true"
             android:text="@string/text_agree"
             app:layout_constraintEnd_toStartOf="@+id/buttonLogIn"
             app:layout_constraintHorizontal_bias="0.5"

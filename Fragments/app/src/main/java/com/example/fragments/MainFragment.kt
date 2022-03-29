@@ -1,14 +1,11 @@
 package com.example.fragments
 
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.fragments.databinding.FragmentMainBinding
@@ -24,8 +21,7 @@ class MainFragment : Fragment(), ItemSelectListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater)
         if (savedInstanceState == null) showListFragment()
         return binding.root
@@ -51,7 +47,6 @@ class MainFragment : Fragment(), ItemSelectListener {
             replace<ListFragment>(R.id.mainFragmentContainer)
             addToBackStack(ListFragment::class.java.simpleName)
         }
-
     }
 
     private fun showDetailFragment(imageLink: String, fullName: String, descriptionText: String) {
@@ -75,13 +70,5 @@ class MainFragment : Fragment(), ItemSelectListener {
         const val ARG_IMAGE_LINK = "imageLink"
         const val ARG_FULL_NAME = "fullName"
         const val ARG_DESCRIPTION_TEXT = "descriptionText"
-    }
-
-    private fun showToast(str: String) {
-        Toast.makeText(
-            context,
-            str,
-            Toast.LENGTH_SHORT
-        ).show()
     }
 }

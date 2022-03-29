@@ -36,4 +36,6 @@
     <string name="text_long">Денис Санников. Разрабочитк на Андроид с уоптыом уже более трех лет. Работал в таких организациях, как. Тут пречислены куча организаций и заслуг сотрудника, которых он добился в своей карьере..</string>
     <string name="text_example">Text from list fragment</string>
     <string name="text_example_full_name">Full name example</string>
+    <string name="sample_pass">1223245tewtwe</string>
+    <string name="sample_email">email@mai.ru</string>
 </resources>
