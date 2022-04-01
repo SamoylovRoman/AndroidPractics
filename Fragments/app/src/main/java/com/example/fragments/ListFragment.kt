@@ -15,10 +15,6 @@ class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,5 +64,7 @@ class ListFragment : Fragment() {
 
     companion object {
         private const val NUMBER_OF_ITEMS = 10
+
+        fun newInstance() = ListFragment()
     }
 }

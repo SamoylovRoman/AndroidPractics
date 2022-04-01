@@ -17,16 +17,30 @@ class MainActivity : AppCompatActivity(), ActivityNavigator {
             showLoginFragment()
     }
 
+    /*If childFragmentManager of MainFragment contains more than one fragment entries,
+    * pop fragment from childFragmentManager.
+    * Else - run super.onBackPressed() realization. */
+    override fun onBackPressed() {
+        val childFragmentBackStack =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainer)?.childFragmentManager
+        when {
+            childFragmentBackStack != null && childFragmentBackStack.backStackEntryCount > 1 ->
+                childFragmentBackStack.popBackStack()
+            else -> super.onBackPressed()
+        }
+    }
+
     private fun showLoginFragment() {
+        val loginFragment = LoginFragment.newInstance()
         supportFragmentManager.commit {
-            replace<LoginFragment>(R.id.fragmentContainer)
+            replace(R.id.fragmentContainer, loginFragment)
         }
     }
 
     override fun showMainFragment() {
+        val mainFragment = MainFragment.newInstance()
         supportFragmentManager.commit {
-            replace<MainFragment>(R.id.fragmentContainer)
-            addToBackStack(MainFragment::class.java.simpleName)
+            replace(R.id.fragmentContainer, mainFragment)
         }
     }
 }

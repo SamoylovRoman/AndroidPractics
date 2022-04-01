@@ -19,9 +19,9 @@ class DetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            paramImageLink = it.getString(MainFragment.ARG_IMAGE_LINK)
-            paramFullName = it.getString(MainFragment.ARG_FULL_NAME)
-            paramDescriptionName = it.getString(MainFragment.ARG_DESCRIPTION_TEXT)
+            paramImageLink = it.getString(ARG_IMAGE_LINK)
+            paramFullName = it.getString(ARG_FULL_NAME)
+            paramDescriptionName = it.getString(ARG_DESCRIPTION_TEXT)
         }
     }
 
@@ -43,5 +43,21 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+    }
+
+    companion object {
+        const val ARG_IMAGE_LINK = "imageLink"
+        const val ARG_FULL_NAME = "fullName"
+        const val ARG_DESCRIPTION_TEXT = "descriptionText"
+
+        fun newInstance(paramImageLink: String, paramFullName: String, paramDescription: String) =
+            DetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_IMAGE_LINK, paramImageLink)
+                    putString(ARG_FULL_NAME, paramFullName)
+                    putString(ARG_DESCRIPTION_TEXT, paramDescription)
+                }
+            }
     }
 }
