@@ -3,7 +3,6 @@ package com.example.fragments
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.example.fragments.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), ActivityNavigator {
@@ -40,6 +39,12 @@ class MainActivity : AppCompatActivity(), ActivityNavigator {
     override fun showMainFragment() {
         val mainFragment = MainFragment.newInstance()
         supportFragmentManager.commit {
+            setCustomAnimations(
+                R.anim.slide_in_from_left,
+                R.anim.slide_in_from_top,
+                R.anim.slide_in_from_left,
+                R.anim.fade_out
+            )
             replace(R.id.fragmentContainer, mainFragment)
         }
     }

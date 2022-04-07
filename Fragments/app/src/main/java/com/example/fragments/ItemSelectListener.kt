@@ -1,5 +1,7 @@
 package com.example.fragments
 
+import android.graphics.Bitmap
+
 interface ItemSelectListener {
-    fun onItemSelected(imageLink: String, fullName: String, descriptionText: String)
+    fun onItemSelected(imageBitmap: Bitmap, fullName: String, descriptionText: String)
 }

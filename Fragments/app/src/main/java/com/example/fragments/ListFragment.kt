@@ -1,6 +1,8 @@
 package com.example.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.drawToBitmap
+import androidx.core.view.forEach
 import com.example.fragments.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
@@ -24,7 +29,7 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
     private fun createListItems() {
         with(binding) {
             (1..NUMBER_OF_ITEMS).forEach {
@@ -37,8 +42,10 @@ class ListFragment : Fragment() {
                     customItemView.findViewById<TextView>(R.id.fullName).text.toString()
                 )
                 customItemView.setOnClickListener {
+                    clearCheckedItem()
+                    customItemView.setBackgroundColor(R.color.blue)
                     onItemClick(
-                        customItemView.findViewById<ImageView>(R.id.avatarImage).toString(),
+                        customItemView.findViewById<ImageView>(R.id.avatarImage).drawable.toBitmap(),
                         customItemView.findViewById<TextView>(R.id.fullName).text.toString(),
                         customItemView.findViewById<TextView>(R.id.description).text.toString()
                     )
@@ -48,10 +55,19 @@ class ListFragment : Fragment() {
         }
     }
 
-    private fun onItemClick(imageText: String, fullNameText: String, descriptionText: String) {
-        Log.d("ListFragment", "$imageText + $fullNameText + $descriptionText")
+    @SuppressLint("ResourceAsColor")
+    private fun clearCheckedItem() {
+        (binding.listItemsContainer as ViewGroup).forEach { itemViewGroup ->
+            itemViewGroup.setBackgroundColor(R.color.white)
+            Log.d("clearCheckedItem", itemViewGroup.javaClass.simpleName)
+        }
+
+    }
+
+    private fun onItemClick(imageBitMap: Bitmap, fullNameText: String, descriptionText: String) {
+        Log.d("ListFragment", "$imageBitMap + $fullNameText + $descriptionText")
         (parentFragment as? ItemSelectListener)?.onItemSelected(
-            imageText,
+            imageBitMap,
             fullNameText,
             descriptionText
         )

@@ -16,7 +16,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            android:src="@drawable/png_log_in"
+            android:src="@drawable/ic_launcher_foreground"
             tools:ignore="ContentDescription" />
 
         <TextView

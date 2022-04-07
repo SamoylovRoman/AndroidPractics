@@ -1,6 +1,8 @@
 package com.example.fragments
 
+import android.graphics.Bitmap
 import android.os.Bundle
+
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,10 +20,20 @@ class MainFragment : Fragment(), ItemSelectListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater)
-        if (savedInstanceState == null)
-            showListFragment()
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState == null) {
+            if (!isSmallestWidth600DP()) {
+                showListFragment()
+            }
+        }
+    }
+
+    private fun isSmallestWidth600DP() =
+        context?.resources?.configuration?.smallestScreenWidthDp!! >= 600
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -36,17 +48,25 @@ class MainFragment : Fragment(), ItemSelectListener {
         }
     }
 
-    private fun showDetailFragment(imageLink: String, fullName: String, descriptionText: String) {
-        val detailFragment = DetailFragment.newInstance(imageLink, fullName, descriptionText)
+    private fun showDetailFragment(imageBitmap: Bitmap, fullName: String, descriptionText: String) {
+        val detailFragment = DetailFragment.newInstance(imageBitmap, fullName, descriptionText)
         childFragmentManager.commit {
+            setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.slide_in_from_top,
+                R.anim.slide_in_from_left,
+                R.anim.fade_out
+            )
+            if (!isSmallestWidth600DP()) {
+                addToBackStack(DetailFragment::class.java.simpleName)
+            }
             replace(R.id.mainFragmentContainer, detailFragment)
-            addToBackStack(DetailFragment::class.java.simpleName)
         }
     }
 
-    override fun onItemSelected(imageLink: String, fullName: String, descriptionText: String) {
-        Log.d("onItemSelect: ", "$imageLink + $fullName + $descriptionText")
-        showDetailFragment(imageLink, fullName, descriptionText)
+    override fun onItemSelected(imageBitmap: Bitmap, fullName: String, descriptionText: String) {
+        Log.d("onItemSelect: ", "$imageBitmap + $fullName + $descriptionText")
+        showDetailFragment(imageBitmap, fullName, descriptionText)
     }
 
     companion object {
