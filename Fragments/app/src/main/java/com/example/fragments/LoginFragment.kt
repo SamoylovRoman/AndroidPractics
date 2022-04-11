@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater)
-        uploadImage()
+        loadTopImage()
         initListeners()
         restoreValidLoginState(savedInstanceState)
         restoreLoginButtonActiveState()
@@ -149,7 +149,7 @@ class LoginFragment : Fragment() {
         binding.buttonLogIn.isEnabled = agreeCheckIsReady && loginIsReady && passwordIsReady
     }
 
-    private fun uploadImage() {
+    private fun loadTopImage() {
         Glide.with(this)
             .load(URL_PATH)
             .placeholder(R.drawable.png_download_arrow)

@@ -42,8 +42,6 @@ class ListFragment : Fragment() {
                     customItemView.findViewById<TextView>(R.id.fullName).text.toString()
                 )
                 customItemView.setOnClickListener {
-                    clearCheckedItem()
-                    customItemView.setBackgroundColor(R.color.blue)
                     onItemClick(
                         customItemView.findViewById<ImageView>(R.id.avatarImage).drawable.toBitmap(),
                         customItemView.findViewById<TextView>(R.id.fullName).text.toString(),
@@ -53,15 +51,6 @@ class ListFragment : Fragment() {
                 listItemsContainer.addView(customItemView)
             }
         }
-    }
-
-    @SuppressLint("ResourceAsColor")
-    private fun clearCheckedItem() {
-        (binding.listItemsContainer as ViewGroup).forEach { itemViewGroup ->
-            itemViewGroup.setBackgroundColor(R.color.white)
-            Log.d("clearCheckedItem", itemViewGroup.javaClass.simpleName)
-        }
-
     }
 
     private fun onItemClick(imageBitMap: Bitmap, fullNameText: String, descriptionText: String) {
