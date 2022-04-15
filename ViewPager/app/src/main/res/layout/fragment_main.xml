@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar"
+        style="@style/ToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/blue"
+        app:menu="@menu/menu_toolbar"
+        app:title="@string/app_name" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:tabMode="scrollable" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        tools:layout_width="match_parent" />
+
+    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+        android:id="@+id/spring_dots_indicator"
+        style="@style/ArticleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_weight="1"
+        android:minHeight="34dp"
+        app:dampingRatio="0.5"
+        app:dotsColor="@color/blue"
+        app:dotsCornerRadius="2dp"
+        app:dotsSize="22dp"
+        app:dotsSpacing="6dp"
+        app:dotsStrokeColor="@color/blue"
+        app:dotsStrokeWidth="2dp"
+        app:stiffness="300" />
+
+    <Button
+        android:id="@+id/buttonGenerateEvent"
+        style="@style/ArticleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="60dp"
+        android:text="@string/text_generate_event" />
+
+</LinearLayout>

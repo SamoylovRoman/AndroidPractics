@@ -1,3 +1,32 @@
 <resources>
-    <string name="app_name">ViewPager</string>
+    <string name="app_name">ViewPager app</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="article_title_text_1">Statistics Show White Supremacy is a Bigger Threat to the U.S. Than Radical Muslims</string>
+    <string name="article_title_text_2">14 Habits of Exceptionally Likable People</string>
+    <string name="article_title_text_3">The 7 Harmless Habits That May Cause Cancer</string>
+    <string name="article_title_text_4">How to Become a World-Class Copywriter in One Month or Less</string>
+    <string name="article_title_text_5">The Best Productivity Habits of Famous Writers</string>
+    <string name="article_text_1">I apologize for the potentially triggering topic, but this kind of analysis works best with real examples, and the best examples are those that talk about very real things.
+
+The above headline uses the study format and lays out the results of the study in the entire headline. Just like the Outdoor Magazine example, a reader wouldn’t need more to know what the article is going to say.
+
+However, the topic is on the pulse. It hits the 2016 election (which was happening when this article was written), racial issues, religious issues, and is predicated on the concept of demystification.
+
+All of these things make people click, but they also make people get involved. It’s not easy to get headlines like this, but if you can, it will certainly drive traffic. Not to mention the beneficial social impact.</string>
+    <string name="article_text_2">Trending on Medium (when I wrote this), it speaks to all of us. Because we all think we’re likable. Again you see an adverb, a number, and a relationship you.</string>
+    <string name="article_text_3">Here there’s a number, the word “habits” again, and a massive topic. We all want to avoid cancer, and we all have harmless habits.
+
+Also, the “May” of the situation speaks to the authenticity approach. The author isn’t 100% positive, because science can’t be 100% positive. It might be a more-clicked article without the “May” — wouldn’t you click “The 7 Harmless Habits That Cause Cancer” in a heartbeat? I mean, really.
+
+But you have to be honest with your reader.</string>
+    <string name="article_text_4">This addresses a very specific profession, and puts it in a timed context. It doesn’t just tell you how to be a copywriter, but how to be a “world-class” copywriter. This extra addition implies you have the ability to do it, which readers want to hear.
+
+Then, there’s the “one month or less”. While I think this is a good headline, it’s also toying with the line of authenticity. I’m guessing any world-class copywriter would argue it can’t be done in a month. However, the article headline doesn’t imply how hard it could be, so it does make you want to click.</string>
+    <string name="article_text_5">While not a strict study, this article collects quotes and concepts from famous writers to create interesting content that is informative to a specific profession. Unlike the Outdoor Magazine article, it doesn’t say anything about what those habits are, so it entices readers to click.
+Inside you’ll find many critical elements of writing, craft, and process, which are akin to trial and error by luminaries in their field. This information can be seen as scientific (in a humanitarian sense), and piques people’s interest.</string>
+    <string name="text_generate_event">Generate event</string>
+    <string name="text_filter">Article filter</string>
+    <string name="text_tooltip">Tap to filter</string>
+    <string name="text_dialog_caption">Choose article tags</string>
+    <string name="text_positive_button">OK</string>
 </resources>
