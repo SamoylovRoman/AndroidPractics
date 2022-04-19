@@ -29,7 +29,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="4"
         android:padding="16dp">
 
         <androidx.viewpager2.widget.ViewPager2
@@ -47,7 +47,7 @@
         app:dampingRatio="0.5"
         app:dotsColor="@color/blue"
         app:dotsCornerRadius="2dp"
-        app:dotsSize="22dp"
+        app:dotsSize="12dp"
         app:dotsSpacing="6dp"
         app:dotsStrokeColor="@color/blue"
         app:dotsStrokeWidth="2dp"

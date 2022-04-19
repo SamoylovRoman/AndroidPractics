@@ -12,7 +12,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import java.io.Serializable
 import kotlin.random.Random
 
-
 class MainFragment : Fragment(), FilterDialogCallBack {
 
     private val articles: List<Article> = listOf(
@@ -26,18 +25,13 @@ class MainFragment : Fragment(), FilterDialogCallBack {
             title = R.string.article_title_text_2,
             picture = R.drawable.jpg_article_2,
             text = R.string.article_text_2,
-            tags = listOf(ArticleTag.BUSINESS, ArticleTag.POLITICS, ArticleTag.TECHNOLOGY)
+            tags = listOf(ArticleTag.TECHNOLOGY)
         ),
         Article(
             title = R.string.article_title_text_3,
             picture = R.drawable.jpg_article_3,
             text = R.string.article_text_3,
-            tags = listOf(
-                ArticleTag.BUSINESS,
-                ArticleTag.POLITICS,
-                ArticleTag.TECHNOLOGY,
-                ArticleTag.WORLD
-            )
+            tags = listOf(ArticleTag.WORLD)
         ),
         Article(
             title = R.string.article_title_text_4,
@@ -52,8 +46,6 @@ class MainFragment : Fragment(), FilterDialogCallBack {
             tags = listOf(
                 ArticleTag.BUSINESS,
                 ArticleTag.POLITICS,
-                ArticleTag.TECHNOLOGY,
-                ArticleTag.ART,
                 ArticleTag.SPORT,
                 ArticleTag.HEALTH
             )
@@ -68,19 +60,25 @@ class MainFragment : Fragment(), FilterDialogCallBack {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    override fun onOKButtonClick() {
-        updateArticles()
+    override fun onOKButtonClick(booleanArray: BooleanArray) {
+        updateArticles(booleanArray)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            articleTagsToShow = savedInstanceState.getSerializable(ARTICLE_TAGS) as BooleanArray
+            articleTagsToShow =
+                savedInstanceState.getSerializable(ARTICLE_TAGS) as BooleanArray
         }
         initViewPager()
         initIndicator()
         initTabLayoutMediator()
         initListeners()
+        if (savedInstanceState != null) {
+            val badgesList =
+                savedInstanceState.getSerializable(BADGE_TAGS) as IntArray
+            initTabLayoutBadges(badgesList)
+        }
     }
 
     private fun initListeners() {
@@ -107,10 +105,7 @@ class MainFragment : Fragment(), FilterDialogCallBack {
     }
 
     private fun showFilterDialog() {
-        val args = Bundle()
-        args.putSerializable(FilterDialogFragment.TAGS_TAG, articleTagsToShow)
-        dialog = FilterDialogFragment()
-        dialog.arguments = args
+        dialog = FilterDialogFragment.newInstance(articleTagsToShow)
         dialog.show(childFragmentManager, FilterDialogFragment.TAG)
     }
 
@@ -119,12 +114,13 @@ class MainFragment : Fragment(), FilterDialogCallBack {
         binding.viewPager.adapter = adapter
         binding.viewPager.setPageTransformer(FanTransformation())
         if (articleTagsToShow.count { tag -> tag } != ArticleTag.values().size) {
-            updateArticles()
+            updateArticles(articleTagsToShow)
         }
     }
 
-    private fun updateArticles() {
+    private fun updateArticles(tags: BooleanArray) {
         val newTagsList: MutableList<ArticleTag> = emptyList<ArticleTag>().toMutableList()
+        articleTagsToShow = tags
         ArticleTag.values().forEachIndexed { index, articleTag ->
             if (articleTagsToShow[index]) {
                 newTagsList += articleTag
@@ -145,6 +141,27 @@ class MainFragment : Fragment(), FilterDialogCallBack {
             } else number = 1
             badgeGravity = BadgeDrawable.TOP_END
         }
+    }
+
+    private fun initTabLayoutBadges(badgesList: IntArray) {
+        articles.forEachIndexed { index, _ ->
+            if (badgesList[index] > 0) {
+                binding.tabLayout.getTabAt(index)?.orCreateBadge?.apply {
+                    number = badgesList[index]
+                    badgeGravity = BadgeDrawable.TOP_END
+                }
+            }
+        }
+    }
+
+    private fun getBudgesList(): IntArray {
+        val badgesList = List(articles.size) { 0 }.toIntArray()
+        articles.forEachIndexed { index, _ ->
+            binding.tabLayout.getTabAt(index)?.badge?.apply {
+                badgesList[index] = number
+            }
+        }
+        return badgesList
     }
 
     private fun initIndicator() {
@@ -170,11 +187,13 @@ class MainFragment : Fragment(), FilterDialogCallBack {
         super.onSaveInstanceState(outState)
         outState.putSerializable(ARTICLE_TAGS, articleTagsToShow as Serializable)
         outState.putSerializable(FilterDialogFragment.TAGS_TAG, articleTagsToShow as Serializable)
+        outState.putSerializable(BADGE_TAGS, getBudgesList())
     }
 
     companion object {
         const val MAX_LENGTH_OF_TITLE = 15
         const val ARTICLE_TAGS = "Article tags"
+        const val BADGE_TAGS = "Tab layout badges"
 
         fun newInstance() = MainFragment()
     }

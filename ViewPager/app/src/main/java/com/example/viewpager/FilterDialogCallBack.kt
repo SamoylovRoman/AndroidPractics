@@ -1,5 +1,5 @@
 package com.example.viewpager
 
 interface FilterDialogCallBack {
-    fun onOKButtonClick()
+    fun onOKButtonClick(booleanArray: BooleanArray)
 }

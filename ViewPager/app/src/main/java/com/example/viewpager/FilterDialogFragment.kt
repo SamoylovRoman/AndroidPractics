@@ -9,24 +9,15 @@ class FilterDialogFragment : DialogFragment() {
 
     private lateinit var tags: BooleanArray
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        tags = arguments?.getSerializable(TAGS_TAG) as BooleanArray
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val tagsArray: List<String> = ArticleTag.values().map { tag ->
-            tag.toString()
-        }
+        tags = arguments?.getSerializable(TAGS_TAG) as BooleanArray
         return AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.text_dialog_caption))
             .setPositiveButton(getString(R.string.text_positive_button)) { _, _ ->
-                (parentFragment as FilterDialogCallBack).onOKButtonClick()
+                (parentFragment as FilterDialogCallBack).onOKButtonClick(tags)
             }
             .setMultiChoiceItems(
-                // I think to use instead tagsArray in this fun
-                // ArticleTag.values().map { tag -> tag.toString() }.toTypedArray(),
-                tagsArray.toTypedArray(),
+                ArticleTag.values().map { tag -> tag.toString() }.toTypedArray(),
                 tags
             ) { _, which, isChecked ->
                 tags[which] = isChecked
@@ -35,6 +26,15 @@ class FilterDialogFragment : DialogFragment() {
     }
 
     companion object {
+
+        fun newInstance(argTags: BooleanArray): FilterDialogFragment {
+            val dialog = FilterDialogFragment()
+            val args = Bundle()
+            args.putSerializable(TAGS_TAG, argTags.clone())
+            dialog.arguments = args
+            return dialog
+        }
+
         const val TAGS_TAG = "tags"
         const val TAG = "FilterDialogFragment"
     }
