@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">RecyclerViewList</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_management_team">Management team</string>
+    <string name="text_view_type_error">"Incorrect type = "</string>
+    <string name="text_manager_error">\"Staff is not a manager, position = \"</string>
+    <string name="text_employee_error">\"Staff is not a employee, position = \"</string>
+    <string name="text_incorrect_view_holder">\"Incorrect view holder = \"</string>
+    <string name="text_list_empty">Staff list is empty</string>
+    <string name="text_add_staff_title">Add new staff</string>
+    <string name="text_full_name">Full name</string>
+    <string name="text_position">Staff position</string>
+    <string name="text_email">E-mail address</string>
+    <string name="text_photo_link">Photo\'s link</string>
+    <string name="text_phone_number">Phone number</string>
+    <string name="text_add">ADD</string>
+    <string name="image_add_description">To add new staff</string>
+    <string name="text_skip">SKIP</string>
+    <string name="text_to_add">To add new staff</string>
+    <string name="text_photo_image">Photo image</string>
+    <string name="text_warning">Warning</string>
+    <string name="text_warning_message">The form is not completely filled in!</string>
+    <string name="text_fill_in">OK. I\'ll fill in!</string>
 </resources>
