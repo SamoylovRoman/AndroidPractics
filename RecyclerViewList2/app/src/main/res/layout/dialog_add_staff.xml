@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            style="@style/TextViewStyle.Title"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_add_staff_title" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/image_add_description"
+            android:src="@drawable/ic_person" />
+
+        <EditText
+            android:id="@+id/fullNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/text_full_name"
+            android:hint="@string/text_full_name"
+            android:inputType="text"
+            android:text="Ivan Ivanov" />
+
+        <EditText
+            android:id="@+id/positionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/text_full_name"
+            android:hint="@string/text_position"
+            android:inputType="text"
+            android:text="Some position" />
+
+        <EditText
+            android:id="@+id/phoneNumberEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/text_phone_number"
+            android:hint="@string/text_phone_number"
+            android:inputType="phone"
+            android:text="8-923-343-7621" />
+
+        <EditText
+            android:id="@+id/photoLinkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/text_photo_link"
+            android:hint="@string/text_photo_link"
+            android:inputType="text"
+            android:text="https://png.pngtree.com/png-clipart/20191022/ourmid/pngtree-teacher-woman-avatar-png-image_1842620.jpg" />
+
+        <CheckBox
+            android:id="@+id/checkboxManagementTeam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_management_team" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/text_email"
+            android:hint="@string/text_email"
+            android:inputType="textEmailAddress"
+            android:text="email@test.ru"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:text="@string/text_add"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/skipButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:text="@string/text_skip"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
