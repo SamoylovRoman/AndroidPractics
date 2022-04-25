@@ -3,6 +3,8 @@ package com.example.recyclerviewlist2
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.recyclerviewlist2.databinding.ItemEmployeeBinding
@@ -12,9 +14,7 @@ class StaffAdapterWithBinding(
     private val onItemClicked: (position: Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var staff: List<Staff> = emptyList()
-
-//    abstract class CommonViewHolder():RecyclerView.ViewHolder(binding.root)
+    private val differ = AsyncListDiffer<Staff>(this, StaffDiffUtilCallback())
 
     inner class ManagerViewHolder(private val binding: ItemManagerBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -62,13 +62,13 @@ class StaffAdapterWithBinding(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is StaffAdapterWithBinding.ManagerViewHolder -> {
-                val staff = staff[position].let { staff -> staff as? Staff.Manager }
+                val staff = differ.currentList[position].let { staff -> staff as? Staff.Manager }
                     ?: error(holder.itemView.resources.getString(R.string.text_manager_error) + position)
                 holder.bind(staff)
 
             }
             is StaffAdapterWithBinding.EmployeeViewHolder -> {
-                val staff = staff[position].let { staff -> staff as? Staff.Employee }
+                val staff = differ.currentList[position].let { staff -> staff as? Staff.Employee }
                     ?: error(holder.itemView.resources.getString(R.string.text_employee_error) + position)
                 holder.bind(staff)
             }
@@ -91,17 +91,34 @@ class StaffAdapterWithBinding(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (staff[position]) {
+        return when (differ.currentList[position]) {
             is Staff.Manager -> TYPE_MANAGER
             else -> TYPE_EMPLOYEE
         }
     }
 
     fun updateStaff(newStaff: List<Staff>) {
-        staff = newStaff
+        differ.submitList(newStaff)
+        differ.currentList
     }
 
-    override fun getItemCount() = staff.size
+    override fun getItemCount() = differ.currentList.size
+
+    class StaffDiffUtilCallback : DiffUtil.ItemCallback<Staff>() {
+        override fun areItemsTheSame(oldItem: Staff, newItem: Staff): Boolean {
+            return when {
+                oldItem is Staff.Manager && newItem is Staff.Manager ->
+                    oldItem.id == newItem.id
+                oldItem is Staff.Employee && newItem is Staff.Employee ->
+                    oldItem.id == newItem.id
+                else -> false
+            }
+        }
+
+        override fun areContentsTheSame(oldItem: Staff, newItem: Staff): Boolean {
+            return oldItem == newItem
+        }
+    }
 
     companion object {
         private const val TYPE_EMPLOYEE = 1

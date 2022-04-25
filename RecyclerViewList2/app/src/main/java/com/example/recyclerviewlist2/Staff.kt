@@ -7,6 +7,7 @@ sealed class Staff : Parcelable {
 
     @Parcelize
     data class Employee(
+        val id: Long,
         val fullName: String,
         val position: String,
         val isManagementTeam: Boolean,
@@ -16,6 +17,7 @@ sealed class Staff : Parcelable {
 
     @Parcelize
     data class Manager(
+        val id: Long,
         val fullName: String,
         val position: String,
         val isManagementTeam: Boolean,

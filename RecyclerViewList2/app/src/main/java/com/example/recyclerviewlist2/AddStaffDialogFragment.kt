@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.recyclerviewlist2.databinding.DialogAddStaffBinding
+import kotlin.random.Random
 
 class AddStaffDialogFragment : DialogFragment() {
     private var _binding: DialogAddStaffBinding? = null
@@ -61,6 +62,7 @@ class AddStaffDialogFragment : DialogFragment() {
             (parentFragment as AddDialogListener)
                 .onAddButtonClicked(
                     Staff.Manager(
+                        id = Random.nextLong(0, Long.MAX_VALUE),
                         fullName = binding.fullNameEditText.text.toString(),
                         position = binding.positionEditText.text.toString(),
                         isManagementTeam = true,
@@ -73,6 +75,7 @@ class AddStaffDialogFragment : DialogFragment() {
             (parentFragment as AddDialogListener)
                 .onAddButtonClicked(
                     Staff.Employee(
+                        id = Random.nextLong(0, Long.MAX_VALUE),
                         fullName = binding.fullNameEditText.text.toString(),
                         position = binding.positionEditText.text.toString(),
                         isManagementTeam = true,

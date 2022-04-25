@@ -1,6 +1,5 @@
 package com.example.recyclerviewlist2
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
 
     private var staff: List<Staff> = listOf(
         Staff.Manager(
+            1,
             "Sergey Usoltcev",
             "Press-atashe",
             true,
@@ -25,6 +25,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
             "https://www.nsktv.ru/upload/resize_cache/iblock/6df/450_450_0/6df7766c68f1c30d7cd674d58da8ba1c.png"
         ),
         Staff.Employee(
+            2,
             "Darya Usoltceva",
             "Call-center manager",
             false,
@@ -32,6 +33,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
             "https://sun9-2.userapi.com/impf/K4bTKaWxLPFkw8wHwp0F7ZtH0CEeXXt54AwSxA/Kh554yEJ3ic.jpg?size=1439x2160&quality=95&sign=ab4288b7fcae7bb499c7f47558cf14f8&type=album"
         ),
         Staff.Manager(
+            3,
             "Roman Samoilov",
             "Marketer",
             true,
@@ -40,6 +42,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
             "https://sun9-16.userapi.com/impg/c858528/v858528522/152613/1Nmu87A22PM.jpg?size=1440x2160&quality=96&sign=5e9467fc6ac620bf5b388925fa0ab9ea&type=album"
         ),
         Staff.Employee(
+            4,
             "Roman Strelnik",
             "Trainer",
             false,
@@ -47,6 +50,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
             "https://sun9-81.userapi.com/impf/c840527/v840527009/28db3/rCIb7tnnOcc.jpg?size=588x588&quality=96&sign=793ffcdee101edaa71b3b466f4caae60&type=album"
         ),
         Staff.Employee(
+            5,
             "Aleksandr Vasiljev",
             "Trainer",
             false,
@@ -54,6 +58,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
             "https://sun9-40.userapi.com/impf/c834104/v834104213/1ff71/PvIv_eAEKxk.jpg?size=1944x1944&quality=96&sign=489afce38968a41060288ea4926dc4a1&type=album"
         ),
         Staff.Employee(
+            6,
             "Nikolaj Drudginin",
             "Trainer",
             false,
@@ -65,7 +70,6 @@ class StaffListFragment : Fragment(), AddDialogListener {
     private var _binding: FragmentStaffListBinding? = null
     private val binding get() = _binding!!
 
-    //    private var staffAdapter: StaffAdapter? = null
     private var staffAdapter: StaffAdapterWithBinding? = null
 
     private lateinit var layoutToShow: String
@@ -94,11 +98,9 @@ class StaffListFragment : Fragment(), AddDialogListener {
         initListeners()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initList() {
         staffAdapter = StaffAdapterWithBinding { position -> deleteStaff(position) }
         staffAdapter?.updateStaff(staff)
-        staffAdapter?.notifyDataSetChanged()
         with(binding.staffList) {
             adapter = staffAdapter
             when (layoutToShow) {
@@ -113,14 +115,21 @@ class StaffListFragment : Fragment(), AddDialogListener {
                     val dividerItemDecoration =
                         DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
                     addItemDecoration(dividerItemDecoration)
-                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
+                    addItemDecoration(
+                        DividerItemDecoration(
+                            requireContext(),
+                            DividerItemDecoration.HORIZONTAL
+                        )
+                    )
                 }
                 STAGGERED_GRID_LAYOUT_TO_SHOW -> {
                     layoutManager =
-                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
-                    val dividerItemDecoration =
+                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    //Doesn't  work bellow. Need to fix
+/*                    val dividerItemDecoration =
                         DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
                     addItemDecoration(dividerItemDecoration)
+                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))*/
                 }
                 else -> {
                     layoutManager = LinearLayoutManager(requireContext())
@@ -146,15 +155,13 @@ class StaffListFragment : Fragment(), AddDialogListener {
     private fun addNewStaff(newStaff: Staff) {
         staff = listOf(newStaff) + staff
         staffAdapter?.updateStaff(staff)
-        staffAdapter?.notifyItemInserted(0)
-        binding.staffList.scrollToPosition(0)
+        binding.staffList.scrollToPosition(0) //doesn't scroll to 0 position after updating list
         updateEmptyTextView()
     }
 
     private fun deleteStaff(position: Int) {
         staff = staff.filterIndexed { index, _ -> index != position }
         staffAdapter?.updateStaff(staff)
-        staffAdapter?.notifyItemRemoved(position)
         updateEmptyTextView()
     }
 
