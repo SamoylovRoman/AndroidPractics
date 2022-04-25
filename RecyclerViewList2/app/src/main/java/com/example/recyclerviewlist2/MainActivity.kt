@@ -12,15 +12,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (savedInstanceState == null) {
+/*        if (savedInstanceState == null) {
             showListFragment()
+        }*/
+        if (savedInstanceState == null) {
+            showMainFragment()
         }
     }
 
-    private fun showListFragment() {
+/*    private fun showListFragment() {
         val listFragment = StaffListFragment.newInstance()
         supportFragmentManager.commit {
             replace(R.id.fragmentContainer, listFragment)
+        }
+    }*/
+
+    private fun showMainFragment() {
+        val mainFragment = MainFragment.newInstance()
+        supportFragmentManager.commit {
+            replace(R.id.fragmentContainer, mainFragment)
         }
     }
 }

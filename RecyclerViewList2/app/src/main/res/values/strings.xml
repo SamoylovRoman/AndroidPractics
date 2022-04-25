@@ -21,4 +21,8 @@
     <string name="text_warning">Warning</string>
     <string name="text_warning_message">The form is not completely filled in!</string>
     <string name="text_fill_in">OK. I\'ll fill in!</string>
+    <string name="text_chose">Chose the Layout Manger below to show list:</string>
+    <string name="text_linear">LinearLayoutManager</string>
+    <string name="text_grid">GridLayoutManager</string>
+    <string name="text_staggered">StaggeredGrid LayoutManager</string>
 </resources>

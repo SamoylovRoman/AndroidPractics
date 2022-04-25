@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.recyclerviewlist2.databinding.FragmentStaffListBinding
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
 class StaffListFragment : Fragment(), AddDialogListener {
 
@@ -61,10 +65,16 @@ class StaffListFragment : Fragment(), AddDialogListener {
     private var _binding: FragmentStaffListBinding? = null
     private val binding get() = _binding!!
 
-    private var staffAdapter: StaffAdapter? = null
+    //    private var staffAdapter: StaffAdapter? = null
+    private var staffAdapter: StaffAdapterWithBinding? = null
+
+    private lateinit var layoutToShow: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            layoutToShow = it.getString(LAYOUT_TO_SHOW)!!
+        }
         if (savedInstanceState != null) {
             staff = savedInstanceState.getParcelableArrayList<Staff>(STAFF_LIST_TAG) as List<Staff>
         }
@@ -86,13 +96,42 @@ class StaffListFragment : Fragment(), AddDialogListener {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initList() {
-        staffAdapter = StaffAdapter { position -> deleteStaff(position) }
+        staffAdapter = StaffAdapterWithBinding { position -> deleteStaff(position) }
         staffAdapter?.updateStaff(staff)
         staffAdapter?.notifyDataSetChanged()
         with(binding.staffList) {
             adapter = staffAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            when (layoutToShow) {
+                LINEAR_LAYOUT_TO_SHOW -> {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    val dividerItemDecoration =
+                        DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                    addItemDecoration(dividerItemDecoration)
+                }
+                GRID_LAYOUT_TO_SHOW -> {
+                    layoutManager = GridLayoutManager(requireContext(), 2)
+                    val dividerItemDecoration =
+                        DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                    addItemDecoration(dividerItemDecoration)
+                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
+                }
+                STAGGERED_GRID_LAYOUT_TO_SHOW -> {
+                    layoutManager =
+                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+                    val dividerItemDecoration =
+                        DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
+                    addItemDecoration(dividerItemDecoration)
+                }
+                else -> {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    val dividerItemDecoration =
+                        DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                    addItemDecoration(dividerItemDecoration)
+                }
+            }
+
             setHasFixedSize(true)
+            itemAnimator = SlideInLeftAnimator()
         }
         updateEmptyTextView()
     }
@@ -142,6 +181,16 @@ class StaffListFragment : Fragment(), AddDialogListener {
 
     companion object {
         const val STAFF_LIST_TAG = "Staff list"
-        fun newInstance() = StaffListFragment()
+        const val LAYOUT_TO_SHOW = "Layout to show"
+        const val LINEAR_LAYOUT_TO_SHOW = "LinearLayout"
+        const val GRID_LAYOUT_TO_SHOW = "GridLayout"
+        const val STAGGERED_GRID_LAYOUT_TO_SHOW = "StaggeredGridLayout"
+
+        fun newInstance(layoutToShow: String) =
+            StaffListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(LAYOUT_TO_SHOW, layoutToShow)
+                }
+            }
     }
 }

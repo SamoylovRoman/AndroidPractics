@@ -13,6 +13,7 @@
         android:layout_height="100dp"
         android:contentDescription="@string/text_photo_image"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
@@ -22,6 +23,7 @@
         style="@style/TextViewStyle.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/blue"
         app:layout_constraintBottom_toTopOf="@+id/positionText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -59,11 +61,23 @@
         style="@style/TextViewStyle.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/emailAddressText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/photoImage"
         app:layout_constraintTop_toBottomOf="@+id/managementTeamText"
         tools:text="@tools:sample/us_phones" />
+
+    <TextView
+        android:id="@+id/emailAddressText"
+        style="@style/TextViewStyle.SimpleTextItalic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/photoImage"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberText"
+        tools:text="@tools:sample/last_names" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
