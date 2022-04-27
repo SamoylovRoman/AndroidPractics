@@ -19,11 +19,11 @@ class StaffAdapter(
         return when (viewType) {
             TYPE_MANAGER -> ManagerHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_manager, parent, false), onItemClicked
+                    .inflate(R.layout.item_manager_horizontal, parent, false), onItemClicked
             )
             TYPE_EMPLOYEE -> EmployeeHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_employee, parent, false), onItemClicked
+                    .inflate(R.layout.item_employee_horizontal, parent, false), onItemClicked
             )
             else -> error(parent.context.resources.getString(R.string.text_view_type_error) + viewType.toString())
         }

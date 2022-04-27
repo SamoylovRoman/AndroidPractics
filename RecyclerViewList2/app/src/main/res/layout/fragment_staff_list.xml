@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="5"
-        tools:listitem="@layout/item_employee" />
+        tools:listitem="@layout/item_employee_horizontal" />
 
     <TextView
         android:id="@+id/emptyListText"

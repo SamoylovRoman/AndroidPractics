@@ -37,7 +37,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
             "Roman Samoilov",
             "Marketer",
             true,
-            "8 (923) 701-01-07",
+            "8 (913) 342-41-118 (913) 342-41-118 (913) 342-41-11",
             "testmail@mail.ru",
             "https://sun9-16.userapi.com/impg/c858528/v858528522/152613/1Nmu87A22PM.jpg?size=1440x2160&quality=96&sign=5e9467fc6ac620bf5b388925fa0ab9ea&type=album"
         ),
@@ -155,7 +155,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
     private fun addNewStaff(newStaff: Staff) {
         staff = listOf(newStaff) + staff
         staffAdapter?.updateStaff(staff)
-        binding.staffList.scrollToPosition(0) //doesn't scroll to 0 position after updating list
+        binding.staffList.post { binding.staffList.scrollToPosition(0) }
         updateEmptyTextView()
     }
 
