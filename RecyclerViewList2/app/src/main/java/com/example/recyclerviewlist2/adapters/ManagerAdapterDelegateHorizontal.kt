@@ -34,7 +34,6 @@ class ManagerAdapterDelegateHorizontal(
         holder.bind(item)
     }
 
-
     inner class ManagerViewHolder(private val binding: ItemManagerHorizontalBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
@@ -56,6 +55,4 @@ class ManagerAdapterDelegateHorizontal(
             binding.emailAddressText.text = staff.emailAddress
         }
     }
-
-
 }

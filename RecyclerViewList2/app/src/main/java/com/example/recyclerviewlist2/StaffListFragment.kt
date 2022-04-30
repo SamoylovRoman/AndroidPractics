@@ -1,14 +1,13 @@
 package com.example.recyclerviewlist2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.core.view.children
+import androidx.recyclerview.widget.*
 import com.example.recyclerviewlist2.databinding.FragmentStaffListBinding
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
@@ -64,7 +63,7 @@ class StaffListFragment : Fragment(), AddDialogListener {
             false,
             "8 (966) 223-23-54",
             "https://sun9-29.userapi.com/impf/DWWiINEiQ7uOcevlbTfnjIha8MSKAxpmfelP1A/SPYTZbHTKd0.jpg?size=960x1200&quality=96&sign=5d81648bb18cd4b64cbe833f6f393e2b&type=album"
-        ),
+        )
     )
 
     private var _binding: FragmentStaffListBinding? = null
@@ -100,49 +99,132 @@ class StaffListFragment : Fragment(), AddDialogListener {
 
     private fun initList() {
         staffAdapter = StaffAdapterWithBinding { position -> deleteStaff(position) }
-        staffAdapter?.updateStaff(staff)
+        staffAdapter?.items = staff
         with(binding.staffList) {
             adapter = staffAdapter
             when (layoutToShow) {
                 LINEAR_LAYOUT_TO_SHOW -> {
-                    layoutManager = LinearLayoutManager(requireContext())
-                    val dividerItemDecoration =
-                        DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-                    addItemDecoration(dividerItemDecoration)
+                    initLinearLayout(this)
                 }
                 GRID_LAYOUT_TO_SHOW -> {
-                    layoutManager = GridLayoutManager(requireContext(), 2)
-                    val dividerItemDecoration =
-                        DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-                    addItemDecoration(dividerItemDecoration)
-                    addItemDecoration(
-                        DividerItemDecoration(
-                            requireContext(),
-                            DividerItemDecoration.HORIZONTAL
-                        )
-                    )
+                    initGridLayout(this)
                 }
                 STAGGERED_GRID_LAYOUT_TO_SHOW -> {
-                    layoutManager =
-                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                    //Doesn't  work bellow. Need to fix
-/*                    val dividerItemDecoration =
-                        DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
-                    addItemDecoration(dividerItemDecoration)
-                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))*/
+                    initStaggeredGridLayout(this)
                 }
                 else -> {
-                    layoutManager = LinearLayoutManager(requireContext())
-                    val dividerItemDecoration =
-                        DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-                    addItemDecoration(dividerItemDecoration)
+                    initLinearLayout(this)
                 }
             }
-
             setHasFixedSize(true)
             itemAnimator = SlideInLeftAnimator()
         }
         updateEmptyTextView()
+    }
+
+    private fun initStaggeredGridLayout(recyclerView: RecyclerView) {
+        val staggeredGridLayout = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        with(recyclerView) {
+            layoutManager = staggeredGridLayout
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    Log.d("onScrolled", "dx = $dx, dy = $dy")
+                    Log.d("onScrolled", "Focused child = ${staggeredGridLayout.gapStrategy}")
+
+//                    staggeredGridLayout.findFirstCompletelyVisibleItemPositions(IntArray(staff.size))
+/*                    Log.d(
+                        "onScrolled",
+                        "first one = ${
+                            staggeredGridLayout.findFirstCompletelyVisibleItemPositions(
+                                IntArray(
+                                    staff.size
+                                )
+                            )
+                        }"
+                    )*/
+                }
+            })
+/*            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    val totalItemCount = staggeredGridLayout.itemCount
+                    val lastVisibleItem = staggeredGridLayout.childCount
+                    if (lastVisibleItem == totalItemCount - 1 &&
+                        totalItemCount < MAX_ITEMS_COUNT_TO_LOAD
+                    ) {
+                        loadNextRandomItems(ITEMS_COUNT_TO_LOAD)
+                    }
+                }
+            })*/
+        }
+    }
+
+    private fun initGridLayout(recyclerView: RecyclerView) {
+        val gridLayout = GridLayoutManager(context, 2)
+        with(recyclerView) {
+            layoutManager = gridLayout
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    val totalItemCount = gridLayout.itemCount
+                    val lastVisibleItem = gridLayout.findLastVisibleItemPosition()
+                    if (lastVisibleItem == totalItemCount - 1 &&
+                        totalItemCount < MAX_ITEMS_COUNT_TO_LOAD
+                    ) {
+                        loadNextRandomItems(ITEMS_COUNT_TO_LOAD)
+                    }
+                }
+            })
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.HORIZONTAL
+                )
+            )
+            addItemDecoration(ItemOffsetDecoration(context))
+        }
+    }
+
+    private fun initLinearLayout(recyclerView: RecyclerView) {
+        val linearLayout = LinearLayoutManager(context)
+        with(recyclerView) {
+            layoutManager = linearLayout
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(
+                    recyclerView: RecyclerView,
+                    newState: Int
+                ) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    val totalItemCount = linearLayout.itemCount
+                    val lastVisibleItem = linearLayout.findLastVisibleItemPosition()
+                    if (lastVisibleItem == totalItemCount - 1 &&
+                        totalItemCount < MAX_ITEMS_COUNT_TO_LOAD
+                    ) {
+                        loadNextRandomItems(ITEMS_COUNT_TO_LOAD)
+                    }
+                }
+            })
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+    }
+
+    private fun loadNextRandomItems(count: Int) {
+        val newStaff =
+            if (count <= (MAX_ITEMS_COUNT_TO_LOAD - staff.size)) List(count) { staff.random() }
+            else List(MAX_ITEMS_COUNT_TO_LOAD - staff.size) { staff.random() }
+        staff = staff + newStaff
+        staffAdapter?.items = staff
     }
 
     private fun initListeners() {
@@ -154,14 +236,14 @@ class StaffListFragment : Fragment(), AddDialogListener {
 
     private fun addNewStaff(newStaff: Staff) {
         staff = listOf(newStaff) + staff
-        staffAdapter?.updateStaff(staff)
+        staffAdapter?.items = staff
         binding.staffList.post { binding.staffList.scrollToPosition(0) }
         updateEmptyTextView()
     }
 
     private fun deleteStaff(position: Int) {
         staff = staff.filterIndexed { index, _ -> index != position }
-        staffAdapter?.updateStaff(staff)
+        staffAdapter?.items = staff
         updateEmptyTextView()
     }
 
@@ -192,6 +274,8 @@ class StaffListFragment : Fragment(), AddDialogListener {
         const val LINEAR_LAYOUT_TO_SHOW = "LinearLayout"
         const val GRID_LAYOUT_TO_SHOW = "GridLayout"
         const val STAGGERED_GRID_LAYOUT_TO_SHOW = "StaggeredGridLayout"
+        const val ITEMS_COUNT_TO_LOAD = 3
+        const val MAX_ITEMS_COUNT_TO_LOAD = 12
 
         fun newInstance(layoutToShow: String) =
             StaffListFragment().apply {

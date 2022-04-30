@@ -1,43 +1,17 @@
 package com.example.recyclerviewlist2
 
-import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-
-import com.example.recyclerviewlist2.adapters.EmployeeAdapterDelegateHorizontal
-import com.example.recyclerviewlist2.adapters.ManagerAdapterDelegateHorizontal
-import com.hannesdorfmann.adapterdelegates4.AdapterDelegatesManager
+import com.example.recyclerviewlist2.adapters.EmployeeAdapterDelegate
+import com.example.recyclerviewlist2.adapters.ManagerAdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class StaffAdapterWithBinding(
     onItemClicked: (position: Int) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val differ = AsyncListDiffer<Staff>(this, StaffDiffUtilCallback())
-
-    private val delegatesManager = AdapterDelegatesManager<List<Staff>>()
+) : AsyncListDifferDelegationAdapter<Staff>(StaffDiffUtilCallback()) {
 
     init {
-        delegatesManager.addDelegate(ManagerAdapterDelegateHorizontal(onItemClicked))
-            .addDelegate(EmployeeAdapterDelegateHorizontal(onItemClicked))
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return delegatesManager.getItemViewType(differ.currentList, position)
-    }
-
-    override fun getItemCount() = differ.currentList.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return delegatesManager.onCreateViewHolder(parent, viewType)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegatesManager.onBindViewHolder(differ.currentList, position, holder)
-    }
-
-    fun updateStaff(newStaff: List<Staff>) {
-        differ.submitList(newStaff)
+        delegatesManager.addDelegate(ManagerAdapterDelegate(onItemClicked))
+            .addDelegate(EmployeeAdapterDelegate(onItemClicked))
     }
 
     class StaffDiffUtilCallback : DiffUtil.ItemCallback<Staff>() {
