@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">PermissionsAndDate</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_button_allow">Разрешить</string>
+    <string name="text_main_text">ДЛЯ ОТОБРАЖЕНИЯ\nСПИСКА ЛОКАЦИЙ\nНЕОБХОДИМО\nРАЗРЕШЕНИЕ К GPS</string>
+    <string name="text_empty_list">НЕТ ЛОКАЦИЙ ДЛЯ\nОТОБРАЖЕНИЯ</string>
+    <string name="text_location_canceled">Запрос локации отменен</string>
+    <string name="text_location_failed">Запрос локации завершился неудачно</string>
+    <string name="text_no_location">Локация отсутствует</string>
+    <string name="text_image_description">Location image</string>
+    <string name="text_button_get_location">Получить локацию</string>
+    <string name="text_permission_not_approved">Разрешение не одобрено!\nОтобразить локации невозможно…</string>
+    <string name="text_rationale_dialog">Необходимо ободрение пользователя на получение доступа к GPS для отображения инфомации а локации</string>
+    <string name="text_ok">Разрешить</string>
+    <string name="text_cancel">Отмена</string>
+    <string name="text_need_to_update_google_api">Требуется обновить Google Play Services</string>
+    <string name="text_update_api">Обновить</string>
 </resources>
