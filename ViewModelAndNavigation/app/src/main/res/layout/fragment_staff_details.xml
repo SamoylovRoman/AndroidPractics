@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            style="@style/TextViewStyle.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_staff_detail_information" />
+
+        <TextView
+            android:id="@+id/idTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/us_zipcodes" />
+
+        <ImageView
+            android:id="@+id/avatarImageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:contentDescription="@string/image_show_detail_info"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_person" />
+
+        <TextView
+            android:id="@+id/fullNameViewText"
+            style="@style/TextViewStyle.TitleDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Ivan Ivanov" />
+
+        <TextView
+            android:id="@+id/managementTeamTextView"
+            style="@style/TextViewStyle.SimpleTextDetailItalic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_management_team" />
+
+        <TextView
+            android:id="@+id/positionViewText"
+            style="@style/TextViewStyle.SubtitleDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Some position" />
+
+        <TextView
+            android:id="@+id/phoneNumberViewText"
+            style="@style/TextViewStyle.SubtitleDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="8-923-343-7621" />
+
+
+        <TextView
+            android:id="@+id/emailViewText"
+            style="@style/TextViewStyle.SimpleTextDetailItalic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            tools:text="email@test.ru" />
+
+        <Button
+            android:id="@+id/skipButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/text_skip" />
+
+    </LinearLayout>
+</ScrollView>

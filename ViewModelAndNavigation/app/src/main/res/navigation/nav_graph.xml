@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/staffListFragment">
+
+    <fragment
+        android:id="@+id/staffListFragment"
+        android:name="com.example.viewmodelandnavigation.StaffListFragment"
+        android:label="fragment_staff_list"
+        tools:layout="@layout/fragment_staff_list">
+        <action
+            android:id="@+id/action_staffListFragment_to_staffDetailsFragment"
+            app:destination="@id/staffDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/staffDetailsFragment"
+        android:name="com.example.viewmodelandnavigation.StaffDetailsFragment"
+        android:label="StaffDetailsFragment"
+        tools:layout="@layout/fragment_staff_details">
+        <argument
+            android:name="staffid"
+            app:argType="long" />
+        <argument
+            android:name="staffItem"
+            app:argType="com.example.viewmodelandnavigation.Staff" />
+    </fragment>
+
+</navigation>
