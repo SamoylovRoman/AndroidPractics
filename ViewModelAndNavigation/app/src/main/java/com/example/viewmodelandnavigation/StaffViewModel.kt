@@ -8,28 +8,28 @@ class StaffViewModel : ViewModel() {
 
     private val repository = StaffRepository()
 
-    private val staffLiveData = MutableLiveData(repository.generateStaff(5))
+    private val _staff = MutableLiveData(repository.generateStaff(5))
 
-    private val showToastLiveData = SingleLiveEvent<Unit>()
+    private val _showToast = SingleLiveEvent<Unit>()
 
     val staff: LiveData<List<Staff>>
-        get() = staffLiveData
+        get() = _staff
 
     val showToast: LiveData<Unit>
-        get() = showToastLiveData
+        get() = _showToast
 
     fun addStaff() {
         val newStaff = repository.createStaff()
-        val updatedList = listOf(newStaff) + staffLiveData.value.orEmpty()
-        staffLiveData.postValue(updatedList)
-        showToastLiveData.postValue(Unit)
+        val updatedList = listOf(newStaff) + _staff.value.orEmpty()
+        _staff.postValue(updatedList)
+        _showToast.postValue(Unit)
     }
 
     fun deleteStaff(position: Int) {
-        staffLiveData.postValue(repository.deleteStaff(staffLiveData.value.orEmpty(), position))
+        _staff.postValue(repository.deleteStaff(_staff.value.orEmpty(), position))
     }
 
     fun isEmptyLiveData(): Boolean = staff.value!!.isEmpty()
 
-    fun getStaff(idItem: Long): Staff = repository.getStaff(staffLiveData.value.orEmpty(), idItem)
+    fun getStaff(idItem: Long): Staff = repository.getStaff(_staff.value.orEmpty(), idItem)
 }

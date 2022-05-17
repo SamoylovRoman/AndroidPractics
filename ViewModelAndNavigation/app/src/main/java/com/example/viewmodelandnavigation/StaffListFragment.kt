@@ -1,11 +1,14 @@
 package com.example.viewmodelandnavigation
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.HandlerCompat.postDelayed
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
@@ -46,7 +49,12 @@ class StaffListFragment : Fragment() {
         },
             { position ->
                 deleteStaff(position)
-            })
+            }/*,
+            object : Runnable {
+                override fun run() {
+//                    binding.staffList.scrollToPosition(0)
+                }
+            }*/)
         with(binding.staffList) {
             adapter = staffAdapter
             initLinearLayout(this)
@@ -77,7 +85,7 @@ class StaffListFragment : Fragment() {
 
     private fun addStaff() {
         staffViewModel.addStaff()
-        binding.staffList.post { binding.staffList.scrollToPosition(0) }
+//        binding.staffList.scrollToPosition(0)
         updateEmptyTextView()
     }
 
@@ -95,7 +103,9 @@ class StaffListFragment : Fragment() {
     private fun observeViewModelState() {
         staffViewModel.staff
             .observe(viewLifecycleOwner) { newStaffList ->
-                staffAdapter?.items = newStaffList
+                staffAdapter?.setItems(newStaffList.toMutableList()) {
+                    binding.staffList.scrollToPosition(0)
+                }
                 updateEmptyTextView()
             }
         staffViewModel.showToast
