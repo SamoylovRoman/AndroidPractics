@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingBottom="80dp"
+        android:paddingBottom="180dp"
         android:visibility="gone"
         tools:itemCount="3"
         tools:listitem="@layout/item_location" />
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="@string/text_main_text" />
+        android:text="@string/text_main_text" />
 
     <Button
         android:id="@+id/allowButton"
@@ -33,5 +33,13 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_corner"
         android:text="@string/text_button_allow" />
+
+    <Button
+        android:id="@+id/startFusedLocationButton"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_corner"
+        android:text="@string/text_update_locations" />
 
 </LinearLayout>

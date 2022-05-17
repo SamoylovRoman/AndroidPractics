@@ -10,9 +10,10 @@
     <string name="text_image_description">Location image</string>
     <string name="text_button_get_location">Получить локацию</string>
     <string name="text_permission_not_approved">Разрешение не одобрено!\nОтобразить локации невозможно…</string>
-    <string name="text_rationale_dialog">Необходимо ободрение пользователя на получение доступа к GPS для отображения инфомации а локации</string>
+    <string name="text_rationale_dialog">Необходимо ободрение пользователя на получение доступа к GPS для отображения инфомации о локации</string>
     <string name="text_ok">Разрешить</string>
     <string name="text_cancel">Отмена</string>
     <string name="text_need_to_update_google_api">Требуется обновить Google Play Services</string>
     <string name="text_update_api">Обновить</string>
+    <string name="text_update_locations">Запуск отслеживания</string>
 </resources>

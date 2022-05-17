@@ -9,20 +9,22 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.permissionsanddate.adapter.TypeAdapter
 import com.example.permissionsanddate.databinding.FragmentMainBinding
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
@@ -42,20 +44,19 @@ class MainFragment : Fragment() {
 
     private val permReqLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                isFineLocationPermissionGranted = true
-                checkFineLocationPermission()
-            } else {
-                isFineLocationPermissionGranted = false
-                showToast(getString(R.string.text_permission_not_approved))
-            }
+            onGotPermissionResult(isGranted)
         }
+
+    private var fusedLocationProvider: FusedLocationProviderClient? = null
+    private val locationRequest: LocationRequest = LocationRequest.create().apply {
+        interval = 30000
+        fastestInterval = 10000
+        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        maxWaitTime = 60000
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
         if (savedInstanceState != null) {
             locations =
                 savedInstanceState.getParcelableArrayList<Type.Location>(LOCATIONS_LIST_TAG) as List<Type.Location>
@@ -75,7 +76,40 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initButtonListener()
         initLocationsList()
-        checkFineLocationPermission()
+        checkSelfFineLocationPermission()
+        fusedLocationProvider = LocationServices.getFusedLocationProviderClient(requireContext())
+    }
+
+    private fun checkSelfFineLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            onFineLocationGranted()
+        } else {
+            onFineLocationNotGranted()
+        }
+    }
+
+    private fun initButtonListener() {
+        binding.allowButton.setOnClickListener {
+            if (isFineLocationPermissionGranted) {
+                if (checkGoogleApiAvailability()) {
+                    setLocationServicesListener()
+                }
+            } else {
+                requestFineLocationPermission()
+            }
+        }
+
+        binding.startFusedLocationButton.setOnClickListener {
+            startFusedLocationUpdate()
+        }
+    }
+
+    private fun requestFineLocationPermission() {
+        permReqLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     private fun initLocationsList() {
@@ -85,20 +119,69 @@ class MainFragment : Fragment() {
         binding.locationsList.layoutManager = LinearLayoutManager(context)
         binding.locationsList.addItemDecoration(
             DividerItemDecoration(
-                requireContext(),
+                context,
                 DividerItemDecoration.VERTICAL
             )
         )
+    }
+
+    private fun onGotPermissionResult(isGranted: Boolean) {
+        if (isGranted) {
+            onFineLocationGranted()
+        } else {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                showLocationRationaleDialog()
+            } else {
+                onFineLocationNotGranted()
+            }
+        }
+    }
+
+    private fun onFineLocationGranted() {
+        isFineLocationPermissionGranted = true
+        if (locations.isEmpty()) {
+            binding.mainTextView.setText(R.string.text_empty_list)
+        } else {
+            binding.locationsList.visibility = View.VISIBLE
+            binding.mainTextView.visibility = View.GONE
+        }
+        binding.allowButton.setText(R.string.text_button_get_location)
+    }
+
+    private fun showLocationRationaleDialog() {
+        rationaleDialog = AlertDialog.Builder(requireContext())
+            .setMessage(R.string.text_rationale_dialog)
+            .setPositiveButton(getString(R.string.text_ok)) { _, _ -> requestFineLocationPermission() }
+            .setNegativeButton(getString(R.string.text_cancel)) { _, _ -> onFineLocationNotGranted() }
+            .show()
+    }
+
+    private fun onFineLocationNotGranted() {
+        context.showToast(R.string.text_permission_not_approved)
+        binding.mainTextView.setText(R.string.text_main_text)
+        binding.allowButton.setText(R.string.text_button_allow)
     }
 
     private fun addNewLocation(newLocation: Type.Location?) {
         if (newLocation != null) {
             locations = listOf(newLocation) + locations
             typeAdapter?.items = locations
-            binding.locationsList.scrollToPosition(0)
+            scrollLocationsListToFirstPosition(typeAdapter, binding.locationsList)
             binding.mainTextView.visibility = View.GONE
             binding.locationsList.visibility = View.VISIBLE
         }
+    }
+
+    private fun scrollLocationsListToFirstPosition(
+        adapter: TypeAdapter?,
+        listRecyclerView: RecyclerView
+    ) {
+        adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                listRecyclerView.smoothScrollToPosition(0)
+            }
+        })
     }
 
     private fun editItem(position: Int) {
@@ -146,18 +229,6 @@ class MainFragment : Fragment() {
         typeAdapter?.items = locations
     }
 
-    private fun initButtonListener() {
-        binding.allowButton.setOnClickListener {
-            if (isFineLocationPermissionGranted) {
-                if (checkGoogleApiAvailability()) {
-                    setLocationServicesListener()
-                }
-            } else {
-                requestFineLocationPermission()
-            }
-        }
-    }
-
     private fun checkGoogleApiAvailability(): Boolean {
         val apiAvailability = GoogleApiAvailability.getInstance()
         when (val resultCode = apiAvailability.isGooglePlayServicesAvailable(requireContext())) {
@@ -193,48 +264,14 @@ class MainFragment : Fragment() {
                         imageLink = Type.Location.getRandomImageLink()
                     )
                     addNewLocation(newLocation)
-                } else showToast(getString(R.string.text_no_location))
+                } else context.showToast(R.string.text_no_location)
             }
             .addOnCanceledListener {
-                showToast(getString(R.string.text_location_canceled))
+                context.showToast(R.string.text_location_canceled)
             }
             .addOnFailureListener {
-                showToast(getString(R.string.text_location_failed))
+                context.showToast(R.string.text_location_failed)
             }
-    }
-
-    private fun checkFineLocationPermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                if (locations.isEmpty()) {
-                    binding.mainTextView.setText(R.string.text_empty_list)
-                } else {
-                    binding.locationsList.visibility = View.VISIBLE
-                }
-                binding.allowButton.setText(R.string.text_button_get_location)
-                isFineLocationPermissionGranted = true
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
-                binding.mainTextView.setText(R.string.text_main_text)
-                binding.allowButton.setText(R.string.text_button_allow)
-                showLocationRationaleDialog()
-            }
-            else -> {
-                binding.mainTextView.setText(R.string.text_main_text)
-                binding.allowButton.setText(R.string.text_button_allow)
-            }
-        }
-    }
-
-    private fun showLocationRationaleDialog() {
-        rationaleDialog = AlertDialog.Builder(requireContext())
-            .setMessage(R.string.text_rationale_dialog)
-            .setPositiveButton(getString(R.string.text_ok)) { _, _ -> requestFineLocationPermission() }
-            .setNegativeButton(getString(R.string.text_cancel), null)
-            .show()
     }
 
     private fun showUpdateApiDialog() {
@@ -251,12 +288,52 @@ class MainFragment : Fragment() {
             .show()
     }
 
-    private fun requestFineLocationPermission() {
-        permReqLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    @SuppressLint("MissingPermission")
+    private fun startFusedLocationUpdate() {
+        fusedLocationProvider?.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
     }
 
-    private fun showToast(text: String) {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    private var locationCallback: LocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            val locationsList = locationResult.locations
+            if (locationsList.isNotEmpty()) {
+
+                val updatedLastLocation = locationsList.last()
+                if (locations.isEmpty()) {
+                    addNewLocation(
+                        Type.Location(
+                            id = Random.nextLong(Long.MAX_VALUE),
+                            createdAt = Instant.now(),
+                            latitude = updatedLastLocation.latitude,
+                            longitude = updatedLastLocation.longitude,
+                            speed = updatedLastLocation.speed,
+                            imageLink = Type.Location.getRandomImageLink()
+                        )
+                    )
+                } else {
+                    val lastLocations = locations.last() as Type.Location
+                    if (lastLocations.latitude != updatedLastLocation.latitude ||
+                        lastLocations.longitude != updatedLastLocation.longitude
+                    ) {
+                        addNewLocation(
+                            Type.Location(
+                                id = Random.nextLong(Long.MAX_VALUE),
+                                createdAt = Instant.now(),
+                                latitude = updatedLastLocation.latitude,
+                                longitude = updatedLastLocation.longitude,
+                                speed = updatedLastLocation.speed,
+                                imageLink = Type.Location.getRandomImageLink()
+                            )
+                        )
+                    }
+                }
+                Log.d("locationCallback", "Последняя локация: $updatedLastLocation")
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -270,7 +347,8 @@ class MainFragment : Fragment() {
         private const val LOCATIONS_LIST_TAG = "Locations list"
         private const val FINE_LOC_IS_GRANTED = "IsFineLocationPermissionGranted value"
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9002
-        private const val GOOGLE_PLAY_SERVICES_LINK = "market://play.google.com/store/apps/details?id=com.google.android.gm&hl=en"
+        private const val GOOGLE_PLAY_SERVICES_LINK =
+            "market://play.google.com/store/apps/details?id=com.google.android.gm&hl=en"
 
         fun newInstance() = MainFragment()
     }
