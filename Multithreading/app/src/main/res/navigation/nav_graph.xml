@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.skillbox.multithreading.ui.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_deadlockFragment"
+            app:destination="@id/deadlockFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_livelockFragment"
+            app:destination="@id/livelockFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_raceConditionFragment"
+            app:destination="@id/raceConditionFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_threadingFragment"
+            app:destination="@id/threadingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deadlockFragment"
+        android:name="com.skillbox.multithreading.ui.DeadlockFragment"
+        android:label="DeadlockFragment"
+        tools:layout="@layout/fragment_deadlock"/>
+    <fragment
+        android:id="@+id/livelockFragment"
+        android:name="com.skillbox.multithreading.ui.LivelockFragment"
+        android:label="LivelockFragment"
+        tools:layout="@layout/fragment_livelock"/>
+    <fragment
+        android:id="@+id/raceConditionFragment"
+        android:name="com.skillbox.multithreading.ui.RaceConditionFragment"
+        android:label="RaceConditionFragment"
+        tools:layout="@layout/fragment_race_condition" />
+    <fragment
+        android:id="@+id/threadingFragment"
+        android:name="com.skillbox.multithreading.ui.ThreadingFragment"
+        android:label="ThreadingFragment"
+        tools:layout="@layout/fragment_threading" />
+</navigation>

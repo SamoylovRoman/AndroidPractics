@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Multithreading</string>
+    <string name="text_thread_pool">Thread pool</string>
+    <string name="text_star_of_rating">Star of rating</string>
+    <string name="text_icon_of_movie">Icon of movie</string>
+    <string name="text_callback">CALLBACK</string>
+    <string name="text_handler">HANDLER</string>
+    <string name="text_race_condition">Race condition</string>
+    <string name="text_threads">Threads count</string>
+    <string name="text_increment_iteration">Increment iteration count</string>
+    <string name="text_start_without_sync">Start without sync</string>
+    <string name="text_start_with_sync">Start with sync</string>
+    <string name="text_expected_value">Expected value =</string>
+    <string name="text_real_value">Real value =</string>
+    <string name="text_calculation_time">Calculation time =</string>
+    <string name="text_dead_lock">Dead lock</string>
+    <string name="text_live_lock">Live lock</string>
+    <string name="thread_2">2</string>
+    <string name="text_start_dead_lock">Start with dead lock</string>
+    <string name="text_start_wo_dead_lock">Start without dead lock</string>
+    <string name="text_start_live_lock">Start with live lock</string>
+    <string name="text_start_wo_live_lock">Start without live lock</string>
+    <string name="text_no_values">There are not all values typed in</string>
+    <string name="text_list_updated">Movies list has just updated</string>
+    <string name="text_threads_button">Threads</string>
+</resources>

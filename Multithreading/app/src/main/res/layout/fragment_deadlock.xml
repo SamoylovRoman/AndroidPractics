@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorItemWhite">
+
+    <TextView
+        android:id="@+id/mainDeadLockText"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_dead_lock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/threadsDeadLockCount"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/text_threads"
+        android:backgroundTintMode="add"
+        android:enabled="false"
+        android:hint="@string/text_threads"
+        android:inputType="number"
+        android:text="@string/thread_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainDeadLockText" />
+
+    <EditText
+        android:id="@+id/incrementDeadLockIterationCount"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/text_increment_iteration"
+        android:backgroundTintMode="add"
+        android:hint="@string/text_increment_iteration"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/threadsDeadLockCount" />
+
+    <Button
+        android:id="@+id/startDeadLockButton"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/text_start_dead_lock"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incrementDeadLockIterationCount" />
+
+    <TextView
+        android:id="@+id/expectedValueDeadLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_expected_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startDeadLockButton"
+        tools:text="@string/text_expected_value" />
+
+    <TextView
+        android:id="@+id/realValueDeadLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_real_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expectedValueDeadLock"
+        tools:text="@string/text_real_value" />
+
+    <TextView
+        android:id="@+id/calculationTimeDeadLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_calculation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/realValueDeadLock"
+        tools:text="@string/text_calculation_time" />
+
+    <Button
+        android:id="@+id/startWithoutDeadLockButton"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/text_start_wo_dead_lock"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calculationTimeDeadLock" />
+
+    <TextView
+        android:id="@+id/expectedValueWODeadLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_expected_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startWithoutDeadLockButton"
+        tools:text="@string/text_expected_value" />
+
+    <TextView
+        android:id="@+id/realValueWODeadLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_real_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expectedValueWODeadLock"
+        tools:text="@string/text_real_value" />
+
+    <TextView
+        android:id="@+id/calculationTimeWODeadLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_calculation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/realValueWODeadLock"
+        tools:text="@string/text_calculation_time" />
+</androidx.constraintlayout.widget.ConstraintLayout>

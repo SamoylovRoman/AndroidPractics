@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorItemWhite">
+
+    <TextView
+        android:id="@+id/mainText"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_race_condition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/threadsCount"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/text_threads"
+        android:backgroundTintMode="add"
+        android:hint="@string/text_threads"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainText" />
+
+    <EditText
+        android:id="@+id/incrementIterationCount"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/text_increment_iteration"
+        android:backgroundTintMode="add"
+        android:hint="@string/text_increment_iteration"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/threadsCount" />
+
+    <Button
+        android:id="@+id/startWithoutSyncButton"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/text_start_without_sync"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incrementIterationCount" />
+
+    <TextView
+        android:id="@+id/expectedValueWOSync"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_expected_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startWithoutSyncButton"
+        tools:text="@string/text_expected_value" />
+
+    <TextView
+        android:id="@+id/realValueWOSync"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_real_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expectedValueWOSync"
+        tools:text="@string/text_real_value" />
+
+    <TextView
+        android:id="@+id/calculationTimeWOSync"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_calculation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/realValueWOSync"
+        tools:text="@string/text_calculation_time" />
+
+    <Button
+        android:id="@+id/startWithSyncButton"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/text_start_with_sync"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calculationTimeWOSync" />
+
+    <TextView
+        android:id="@+id/expectedValueWSync"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_expected_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startWithSyncButton"
+        tools:text="@string/text_expected_value" />
+
+    <TextView
+        android:id="@+id/realValueWSync"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_real_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expectedValueWSync"
+        tools:text="@string/text_real_value" />
+
+    <TextView
+        android:id="@+id/calculationTimeWSync"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_calculation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/realValueWSync"
+        tools:text="@string/text_calculation_time" />
+</androidx.constraintlayout.widget.ConstraintLayout>

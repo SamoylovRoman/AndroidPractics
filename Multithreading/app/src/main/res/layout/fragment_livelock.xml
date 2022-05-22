@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorItemWhite">
+
+    <TextView
+        android:id="@+id/mainLiveLockText"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_live_lock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/threadsLiveLockCount"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/text_threads"
+        android:backgroundTintMode="add"
+        android:enabled="false"
+        android:hint="@string/text_threads"
+        android:inputType="number"
+        android:text="@string/thread_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainLiveLockText" />
+
+    <EditText
+        android:id="@+id/incrementLiveLockIterationCount"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/text_increment_iteration"
+        android:backgroundTintMode="add"
+        android:hint="@string/text_increment_iteration"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/threadsLiveLockCount" />
+
+    <Button
+        android:id="@+id/startLiveLockButton"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/text_start_live_lock"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incrementLiveLockIterationCount" />
+
+    <TextView
+        android:id="@+id/expectedValueLiveLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_expected_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startLiveLockButton"
+        tools:text="@string/text_expected_value" />
+
+    <TextView
+        android:id="@+id/realValueLiveLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_real_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expectedValueLiveLock"
+        tools:text="@string/text_real_value" />
+
+    <TextView
+        android:id="@+id/calculationTimeLiveLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_calculation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/realValueLiveLock"
+        tools:text="@string/text_calculation_time" />
+
+    <Button
+        android:id="@+id/startWithoutLiveLockButton"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/text_start_wo_live_lock"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calculationTimeLiveLock" />
+
+    <TextView
+        android:id="@+id/expectedValueWOLiveLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_expected_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startWithoutLiveLockButton"
+        tools:text="@string/text_expected_value" />
+
+    <TextView
+        android:id="@+id/realValueWOLiveLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_real_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expectedValueWOLiveLock"
+        tools:text="@string/text_real_value" />
+
+    <TextView
+        android:id="@+id/calculationTimeWOLiveLock"
+        style="@style/ViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_calculation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/realValueWOLiveLock"
+        tools:text="@string/text_calculation_time" />
+</androidx.constraintlayout.widget.ConstraintLayout>
