@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Networking</string>
+    <string name="app_name">Networking app</string>
+    <string name="text_icon_of_movie">Icon of movie</string>
+    <string name="text_star_of_rating">Star of rating</string>
+    <string name="text_enter_movie_name">Enter movie name</string>
+    <string name="text_series">series</string>
+    <string name="text_movie">movie</string>
+    <string name="text_episode">episode</string>
+    <string name="text_not_selected">not selected</string>
+    <string name="text_movie_type">Movie type</string>
+    <string name="text_enter_release_year">Enter release year</string>
+    <string name="text_search">Search</string>
+    <string name="text_server_error">Server error, try again…</string>
+    <string name="text_try_again">Try again</string>
+    <string name="text_empty_list">Movies list is empty. Change search parameters!</string>
 </resources>
