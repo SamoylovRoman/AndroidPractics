@@ -10,13 +10,13 @@
         android:id="@+id/emptyListText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:text="@string/text_empty_list"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -63,27 +63,27 @@
         android:id="@+id/movieNameText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:autofillHints="@string/text_enter_movie_name"
         android:hint="@string/text_enter_movie_name"
         android:inputType="text"
         android:lines="1"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="@string/text_enter_movie_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/movieYearText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:autofillHints="@string/text_enter_release_year"
         android:hint="@string/text_enter_release_year"
         android:inputType="number"
         android:lines="1"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movieNameText"
-        android:autofillHints="@string/text_enter_release_year" />
+        app:layout_constraintTop_toBottomOf="@+id/movieNameText" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/movieTypeList"
@@ -121,5 +121,28 @@
         app:layout_constraintTop_toBottomOf="@+id/searchButton"
         tools:itemCount="5"
         tools:listitem="@layout/item_movie" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatUpButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_upward"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="40dp"
+        android:contentDescription="@string/text_scroll_to_start" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/linerProgressBar"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/moviesList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

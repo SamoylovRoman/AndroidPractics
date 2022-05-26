@@ -7,21 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.core.view.isEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.networking.R
-import com.example.networking.adapters.MovieAdapter
-import com.example.networking.adapters.RemoteMovieAdapter
 import com.example.networking.databinding.FragmentMainBinding
+import com.example.networking.extension.toast
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    //    private var movieAdapter: MovieAdapter? = null
     private var movieAdapter: RemoteMovieAdapter? = null
+    private var loadedPages: Int = 0
+    private var endOfList: Boolean = false
 
     private val movieViewModel: MainViewModel by viewModels()
 
@@ -43,14 +43,11 @@ class MainFragment : Fragment() {
 
     private fun observeViewModelState() {
         movieViewModel.movies.observe(viewLifecycleOwner) { moviesList ->
-            movieAdapter?.submitList(moviesList) {
-                binding.moviesList.scrollToPosition(0)
-            }
-            binding.emptyListText.visibility = View.GONE
-            binding.errorText.visibility = View.GONE
-            binding.tryAgainButton.visibility = View.GONE
+            movieAdapter?.submitList(moviesList)
+            updateListState()
         }
         movieViewModel.isLoading.observe(viewLifecycleOwner, ::updateLoadingState)
+        movieViewModel.isAddingLoading.observe(viewLifecycleOwner, ::updateAddingLoadState)
         movieViewModel.emptyList.observe(viewLifecycleOwner) {
             binding.emptyListText.visibility = View.VISIBLE
         }
@@ -59,20 +56,22 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun updateEmptyTextState() {
-/*        if (binding.moviesList.isEmpty()) {
-            binding.emptyListText.visibility = View.VISIBLE
-        } else {
-            binding.emptyListText.visibility = View.GONE
-        }*/
+    private fun updateListState() {
+        with(binding) {
+            emptyListText.visibility = View.GONE
+            errorText.visibility = View.GONE
+            tryAgainButton.visibility = View.GONE
+        }
     }
 
     private fun updateErrorState(errorString: String) {
-        binding.moviesList.visibility = View.GONE
-        binding.emptyListText.visibility = View.GONE
-        binding.errorText.text = errorString
-        binding.errorText.visibility = View.VISIBLE
-        binding.tryAgainButton.visibility = View.VISIBLE
+        with(binding) {
+            moviesList.visibility = View.GONE
+            emptyListText.visibility = View.GONE
+            errorText.text = errorString
+            errorText.visibility = View.VISIBLE
+            tryAgainButton.visibility = View.VISIBLE
+        }
     }
 
     private fun updateLoadingState(isLoading: Boolean) {
@@ -86,24 +85,61 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun updateAddingLoadState(isLoading: Boolean) {
+        binding.linerProgressBar.isVisible = isLoading
+    }
+
     private fun initMoviesList() {
-//        movieAdapter = MovieAdapter()
         movieAdapter = RemoteMovieAdapter()
         with(binding.moviesList) {
             adapter = movieAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val visibleItemCount = (layoutManager as LinearLayoutManager).childCount
+                    val totalItemCount = (layoutManager as LinearLayoutManager).itemCount
+                    val firstVisibleItemPosition =
+                        (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+                        if (movieViewModel.movies.value?.size != movieViewModel.moviesCount.value) {
+                            searchMovie()
+                        } else {
+                            if (!endOfList) {
+                                endOfList = true
+                                toast(R.string.text_no_more)
+                            }
+                        }
+                    }
+                }
+            })
             setHasFixedSize(true)
         }
     }
 
     private fun initListeners() {
         binding.searchButton.setOnClickListener {
-            searchMovie()
+            if (checkInputData()) {
+                loadedPages = 0
+                endOfList = false
+                searchMovie()
+            } else {
+                toast(R.string.text_at_least_year)
+            }
         }
         binding.tryAgainButton.setOnClickListener {
-            searchMovie()
-            binding.tryAgainButton.visibility = View.GONE
-            binding.errorText.visibility = View.GONE
+            if (checkInputData()) {
+                loadedPages = 0
+                endOfList = false
+                searchMovie()
+                binding.tryAgainButton.visibility = View.GONE
+                binding.errorText.visibility = View.GONE
+            } else {
+                toast(R.string.text_at_least_year)
+            }
+        }
+        binding.floatUpButton.setOnClickListener {
+            binding.moviesList.smoothScrollToPosition(0)
         }
     }
 
@@ -113,7 +149,8 @@ class MainFragment : Fragment() {
             binding.movieYearText.text.toString(),
             if (binding.movieTypeList.editText?.text.toString() != getString(R.string.text_not_selected)) {
                 binding.movieTypeList.editText?.text.toString()
-            } else ""
+            } else "",
+            (++loadedPages).toString()
         )
     }
 
@@ -123,4 +160,10 @@ class MainFragment : Fragment() {
         (binding.textField as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
+    private fun checkInputData(): Boolean {
+        if (binding.movieNameText.text.isNotBlank()) {
+            return true
+        }
+        return false
+    }
 }

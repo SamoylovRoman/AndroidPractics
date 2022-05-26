@@ -1,4 +1,4 @@
-package com.example.networking.adapters
+package com.example.networking.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.networking.R
-import com.example.networking.data.Movie
 import com.example.networking.data.RemoteMovie
 import com.example.networking.databinding.ItemMovieBinding
 
@@ -29,7 +28,6 @@ class RemoteMovieAdapter :
                 root.setBackgroundResource(movie.itemColor)
                 titleMovieText.text = "${movie.title} (${movie.year})"
                 genreMovieText.text = "${movie.type} / ${movie.id}"
-//                ratingMovieText.text = movie.rating
             }
         }
     }
