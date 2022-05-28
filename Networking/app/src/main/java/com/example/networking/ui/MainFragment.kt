@@ -124,7 +124,7 @@ class MainFragment : Fragment() {
                 endOfList = false
                 searchMovie()
             } else {
-                toast(R.string.text_at_least_year)
+                toast(R.string.text_at_least_name)
             }
         }
         binding.tryAgainButton.setOnClickListener {
@@ -135,7 +135,7 @@ class MainFragment : Fragment() {
                 binding.tryAgainButton.visibility = View.GONE
                 binding.errorText.visibility = View.GONE
             } else {
-                toast(R.string.text_at_least_year)
+                toast(R.string.text_at_least_name)
             }
         }
         binding.floatUpButton.setOnClickListener {

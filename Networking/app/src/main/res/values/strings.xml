@@ -14,7 +14,7 @@
     <string name="text_try_again">Try again</string>
     <string name="text_empty_list">Movies list is empty. Change search parameters!</string>
     <string name="text_end_of_scrolling">Scrolled by the end!</string>
-    <string name="text_at_least_year">Enter at least the year the movie was released</string>
+    <string name="text_at_least_name">Enter at least the movie name</string>
     <string name="text_no_more">No more movies</string>
     <string name="text_scroll_to_start">Scroll to start</string>
 </resources>
