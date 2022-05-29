@@ -7,22 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.moshi.R
 import com.example.moshi.data.RemoteMovie
-import com.example.moshi.data.MovieRating
 import com.example.moshi.data.Score
 import com.example.moshi.databinding.FragmentMainBinding
 import com.example.moshi.extensions.toast
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import java.lang.Exception
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     private val movieViewModel: MainViewModel by viewModels()
+
+    private var scoreAdapter: ScoreAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,17 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
+        initScoreList()
         observeViewModelState()
+    }
+
+    private fun initScoreList() {
+        scoreAdapter = ScoreAdapter()
+        with(binding.ratingsList) {
+            adapter = scoreAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+        }
     }
 
     private fun initListeners() {
@@ -44,6 +54,22 @@ class MainFragment : Fragment() {
                 searchMovie()
             } else toast(R.string.text_at_least_name)
         }
+        binding.addRatingButton.setOnClickListener {
+            showAddRatingDialog()
+        }
+        parentFragmentManager.setFragmentResultListener(
+            AddRatingFragment.REQUEST_CODE,
+            viewLifecycleOwner
+        ) { _, data ->
+            val resourceName = data.getString(AddRatingFragment.RESOURCE_NAME)!!
+            val resourceValue = data.getString(AddRatingFragment.RESOURCE_VALUE)!!
+            movieViewModel.addScore(Pair(resourceName, resourceValue))
+            movieViewModel.printJsonObjectInLog()
+        }
+    }
+
+    private fun showAddRatingDialog() {
+        findNavController().navigate(R.id.action_mainFragment_to_addRatingFragment)
     }
 
     private fun searchMovie() {
@@ -71,6 +97,8 @@ class MainFragment : Fragment() {
             movieYearText.isVisible = false
             movieGenreText.isVisible = false
             posterImage.isVisible = false
+            addRatingButton.isVisible = false
+            movieRatingsText.isVisible = false
         }
     }
 
@@ -89,155 +117,11 @@ class MainFragment : Fragment() {
                 .error(R.drawable.ic_error)
                 .into(posterImage)
             posterImage.isVisible = true
+            addRatingButton.isVisible = true
+            movieRatingsText.isVisible = true
+            scoreAdapter?.submitList(movie.ratings.map { entry ->
+                Score(entry.key, entry.value)
+            })
         }
     }
 }
-
-/*    private val simpleMovie = """
-        {
-            "Title":"xXx",
-            "Year":"2002"
-            ,"imdbID":"tt0295701"
-        }
-        """.trimIndent()
-
-    private val movieList = """
-        [
-            {
-                "Title":"xXx",
-                "Year":"2002",
-                "rating":"PG",
-                "imdbID":"tt0295701"
-            },
-            {
-                "Title":"xXx 2",
-                "Year":"2004",
-                "rating":"G",
-                "imdbID":"tt0295702"
-            }
-        ]
-        """.trimIndent()
-
-    private val movieListWithRating = """
-        [
-            {
-                "Title":"xXx",
-                "Year":"2002",
-                "rating":"PG",
-                "imdbID":"tt0295701",
-                "scores": [
-                {"source":"Internet Movie DataBase","value":"8.6/10"},
-                {"source":"Rotten tomatoes","value":"92%"},
-                {"source":"Metacritic","value":"90/100"}
-                ]
-            },
-            {
-                "Title":"xXx 2",
-                "Year":"2004",
-                "rating":"G",
-                "imdbID":"tt0295702",
-                "scores": [
-                    {"source":"Internet Movie DataBase","value":"8.2/10"},
-                    {"source":"Rotten tomatoes","value":"90%"},
-                    {"source":"Metacritic","value":"91/100"}
-                ]
-            }
-        ]
-        """.trimIndent()
-
-
-
-    override fun onResume() {
-        super.onResume()
-//        convertSimpleMovieJsonToInstance()
-//        convertMovieListJsonToInstance()
-//        convertMovieWithScoreJsonToInstance()
-        convertMovieWithScoreInstanceToJson()
-    }
-
-    private fun convertSimpleMovieJsonToInstance() {
-        val moshi = Moshi.Builder().build()
-        val adapter = moshi.adapter(RemoteMovie::class.java).nonNull()
-        try {
-            val movie = adapter.fromJson(simpleMovie)
-            binding.mainText.text = movie.toString()
-        } catch (e: Exception) {
-            binding.mainText.text = "Parse error = ${e.message}"
-        }
-    }
-
-    private fun convertMovieListJsonToInstance() {
-        val moshi = Moshi.Builder().build()
-        val movieListType = Types.newParameterizedType(
-            List::class.java,
-            RemoteMovie::class.java
-        )
-        val adapter = moshi.adapter<List<RemoteMovie>>(movieListType).nonNull()
-        try {
-            val movies = adapter.fromJson(movieList)
-            binding.mainText.text = movies.toString()
-        } catch (e: Exception) {
-            binding.mainText.text = "Parse error = ${e.message}"
-        }
-    }
-
-    private fun convertMovieWithScoreJsonToInstance() {
-        val moshi = Moshi.Builder().build()
-        val movieListType = Types.newParameterizedType(
-            List::class.java,
-            RemoteMovie::class.java
-        )
-        val adapter = moshi.adapter<List<RemoteMovie>>(movieListType).nonNull()
-        try {
-            val movies = adapter.fromJson(movieListWithRating)
-            binding.mainText.text = movies.toString()
-        } catch (e: Exception) {
-            binding.mainText.text = "Parse error = ${e.message}"
-        }
-    }
-
-    private fun convertMovieWithScoreInstanceToJson() {
-        val moviesToSerialize = listOf(
-            RemoteMovie(
-                id = "tt0295701",
-                title = "xXx",
-                year = 2002,
-                rating = MovieRating.PG,
-                scores = listOf(
-                    Score(
-                        source = "Internet Movie DataBase", value = "8.6 / 10"
-                    ),
-                    Score(
-                        source = "Rotten tomatoes", value = "92%"
-                    )
-                )
-            ),
-            RemoteMovie(
-                id = "tt0295701",
-                title = "xXx 2",
-                year = 2002,
-                rating = MovieRating.PG,
-                scores = listOf(
-                    Score(
-                        source = "Internet Movie DataBase", value = "8.6 / 10"
-                    ),
-                    Score(
-                        source = "Rotten tomatoes", value = "92%"
-                    )
-                )
-            )
-        )
-        val moshi = Moshi.Builder().build()
-        val movieListType = Types.newParameterizedType(
-            List::class.java,
-            RemoteMovie::class.java
-        )
-        val adapter = moshi.adapter<List<RemoteMovie>>(movieListType).nonNull()
-        try {
-            val movies = adapter.toJson(moviesToSerialize)
-            binding.mainText.text = movies.toString()
-        } catch (e: Exception) {
-            binding.mainText.text = "Parse error = ${e.message}"
-        }
-
-    }*/

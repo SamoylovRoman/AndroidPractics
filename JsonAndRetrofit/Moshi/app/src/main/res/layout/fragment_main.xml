@@ -96,7 +96,22 @@
         tools:text="Ratings:"
         tools:visibility="visible" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ratingsList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:clipToPadding="false"
+        android:paddingBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieRatingsText"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_score" />
+
+    <Button
         android:id="@+id/addRatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,99 +126,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:maxImageSize="40dp"
         tools:visibility="visible" />
-
-    <!-- <ProgressBar
-         android:id="@+id/progressBar"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:visibility="gone"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         tools:visibility="visible" />
-
-     <TextView
-         android:id="@+id/errorText"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textColor="@color/colorError"
-         android:textSize="20sp"
-         android:visibility="gone"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         tools:text="@string/text_server_error"
-         tools:visibility="visible" />
-
-
-
-
-     <EditText
-         android:id="@+id/movieYearText"
-         android:layout_width="0dp"
-         android:layout_height="wrap_content"
-         android:autofillHints="@string/text_enter_release_year"
-         android:hint="@string/text_enter_release_year"
-         android:inputType="number"
-         android:lines="1"
-         android:maxLines="1"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/movieNameText" />
-
-     <com.google.android.material.textfield.TextInputLayout
-         android:id="@+id/movieTypeList"
-         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-         android:layout_width="0dp"
-         android:layout_height="wrap_content"
-         android:hint="@string/text_movie_type"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/movieYearText">
-
-         <AutoCompleteTextView
-             android:id="@+id/textField"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:inputType="none" />
-     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-     <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/moviesList"
-         android:layout_width="0dp"
-         android:layout_height="0dp"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/searchButton"
-         tools:itemCount="5"
-         tools:listitem="@layout/item_movie" />
-
-     <com.google.android.material.floatingactionbutton.FloatingActionButton
-         android:id="@+id/floatUpButton"
-         android:layout_width="0dp"
-         android:layout_height="wrap_content"
-         android:layout_margin="4dp"
-         android:backgroundTint="@color/colorAccent"
-         android:src="@drawable/ic_upward"
-         android:textAlignment="center"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:maxImageSize="40dp"
-         android:contentDescription="@string/text_scroll_to_start" />
-
-     <com.google.android.material.progressindicator.LinearProgressIndicator
-         android:id="@+id/linerProgressBar"
-         android:layout_width="0dp"
-         android:layout_height="5dp"
-         android:visibility="gone"
-         app:layout_constraintBottom_toBottomOf="@+id/moviesList"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         tools:visibility="visible" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

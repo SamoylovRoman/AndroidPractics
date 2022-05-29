@@ -45,7 +45,9 @@ class MovieRepository {
         val jsonObject = JSONObject(responseBodyString)
         val responseError = jsonObject.getString("Response")
         if (responseError == "True") {
-            val moshi = Moshi.Builder().build()
+            val moshi = Moshi.Builder()
+                .add(RemoteMovieCustomAdapter())
+                .build()
             val adapter = moshi.adapter(RemoteMovie::class.java).nonNull()
             try {
                 val movie = adapter.fromJson(responseBodyString)!!

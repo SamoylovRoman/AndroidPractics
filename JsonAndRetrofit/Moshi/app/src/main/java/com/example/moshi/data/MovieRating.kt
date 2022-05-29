@@ -2,6 +2,7 @@ package com.example.moshi.data
 
 import com.squareup.moshi.Json
 
+@Suppress("unused")
 enum class MovieRating {
     @Json(name = "G")
     GENERAL,
@@ -10,5 +11,7 @@ enum class MovieRating {
     PG_13,
     R,
     @Json(name = "NC_17")
-    NC_17
+    NC_17,
+    @Json(name = "N/A")
+    N_A
 }

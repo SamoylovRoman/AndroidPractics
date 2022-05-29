@@ -2,14 +2,13 @@ package com.example.moshi.data
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.net.URL
 
 @JsonClass(generateAdapter = true)
 data class RemoteMovie(
     @Json(name = "imdbID")
     val id: String,
     @Json(name = "Title")
-    val title:String,
+    val title: String,
     @Json(name = "Year")
     val year: Int,
     @Json(name = "Rated")
@@ -19,5 +18,5 @@ data class RemoteMovie(
     @Json(name = "Poster")
     val posterUrl: String,
     @Json(name = "Ratings")
-    val ratings: List<Score> = emptyList()
+    var ratings: Map<String, String> = emptyMap()
 )

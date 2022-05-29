@@ -5,7 +5,13 @@
     <string name="text_type_name">Type movie name</string>
     <string name="text_search">Search movie</string>
     <string name="text_poster_image">Poster image</string>
-    <string name="text_ratings">Ratings:</string>
+    <string name="text_ratings">Ratings list:</string>
     <string name="text_add_rating">Add rating</string>
     <string name="text_at_least_name">Enter at least the movie name</string>
+    <string name="add_rating">Add new movie rating</string>
+    <string name="text_resource_name">Enter resource name</string>
+    <string name="text_resource_value">Enter resource value</string>
+    <string name="text_add_rating_click">Add rating</string>
+    <string name="text_skip">Skip</string>
+    <string name="text_enter_values">Enter all values</string>
 </resources>

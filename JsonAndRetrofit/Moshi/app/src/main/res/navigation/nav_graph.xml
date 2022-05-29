@@ -9,5 +9,14 @@
         android:id="@+id/mainFragment"
         android:name="com.example.moshi.ui.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_addRatingFragment"
+            app:destination="@id/addRatingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRatingFragment"
+        android:name="com.example.moshi.ui.AddRatingFragment"
+        android:label="AddRatingFragment"
+        tools:layout="@layout/fragment_add_rating"/>
 </navigation>
