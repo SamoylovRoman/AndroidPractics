@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Moshi</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_not_searched">Movie has not been searched</string>
+    <string name="text_type_name">Type movie name</string>
+    <string name="text_search">Search movie</string>
+    <string name="text_poster_image">Poster image</string>
+    <string name="text_ratings">Ratings:</string>
+    <string name="text_add_rating">Add rating</string>
+    <string name="text_at_least_name">Enter at least the movie name</string>
 </resources>
