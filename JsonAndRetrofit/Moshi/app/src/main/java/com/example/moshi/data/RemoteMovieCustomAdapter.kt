@@ -8,9 +8,12 @@ class RemoteMovieCustomAdapter {
 
     @FromJson
     fun fromJson(customRemoteMovie: CustomRemoteMovie): RemoteMovie {
-        var map = emptyMap<String, String>()
+/*        var map = emptyMap<String, String>()
         customRemoteMovie.ratings.forEach { score ->
             map = map.plus(Pair(score.source, score.value))
+        }*/
+        val map = customRemoteMovie.ratings.associate { score ->
+            score.source to score.value
         }
         return RemoteMovie(
             id = customRemoteMovie.id,
