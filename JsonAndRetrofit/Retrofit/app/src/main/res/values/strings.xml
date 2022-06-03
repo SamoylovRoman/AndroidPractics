@@ -8,7 +8,7 @@
     <string name="text_repositories">PUBLIC REPOSITORIES:</string>
     <string name="owner_avatar">Owner avatar</string>
     <string name="repo_detail_info">REPO DETAIL INFO</string>
-    <string name="owner">Owner:</string>
+    <string name="owner">Owner: %s</string>
     <string name="repo_name">Repo name:</string>
     <string name="owner_image">Owner image</string>
     <string name="click_to_star_unstar_bellow">Click to star/unstar bellow:</string>

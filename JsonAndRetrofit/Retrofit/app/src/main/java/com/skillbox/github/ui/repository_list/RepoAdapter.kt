@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.skillbox.github.R
 import com.skillbox.github.data.RemoteRepo
 import com.skillbox.github.databinding.ItemRepoBinding
+import kotlin.coroutines.coroutineContext
 
 class RepoAdapter(
     private val onItemClicked: (RemoteRepo) -> Unit
@@ -29,7 +30,8 @@ class RepoAdapter(
                     .placeholder(R.drawable.ic_download)
                     .error(R.drawable.ic_error)
                     .into(ownerImage)
-                repoOwnerName.text = repo.owner.ownerName
+                repoOwnerName.text =
+                    root.context.getString(R.string.owner, repo.owner.ownerName)
                 root.setOnClickListener {
                     onItemClicked(repo)
                 }
