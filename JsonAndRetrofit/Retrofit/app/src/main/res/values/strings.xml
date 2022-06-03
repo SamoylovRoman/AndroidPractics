@@ -17,4 +17,5 @@
     <string name="set_new_company">Set new company</string>
     <string name="enter_new_company">Enter new company</string>
     <string name="new_company">Enter new company</string>
+    <string name="clear_star">Clear star</string>
 </resources>
