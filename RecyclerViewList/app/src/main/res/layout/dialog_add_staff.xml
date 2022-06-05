@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="@string/text_full_name"
             android:hint="@string/text_full_name"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="Ivan Ivanov" />
 
         <EditText
             android:id="@+id/positionEditText"
@@ -38,7 +39,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="@string/text_full_name"
             android:hint="@string/text_position"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="Some position" />
 
         <EditText
             android:id="@+id/phoneNumberEditText"
@@ -46,7 +48,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="@string/text_phone_number"
             android:hint="@string/text_phone_number"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:text="8-923-343-7621" />
 
         <EditText
             android:id="@+id/photoLinkEditText"
@@ -54,7 +57,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="@string/text_photo_link"
             android:hint="@string/text_photo_link"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="https://png.pngtree.com/png-clipart/20191022/ourmid/pngtree-teacher-woman-avatar-png-image_1842620.jpg" />
 
         <CheckBox
             android:id="@+id/checkboxManagementTeam"
@@ -69,6 +73,7 @@
             android:autofillHints="@string/text_email"
             android:hint="@string/text_email"
             android:inputType="textEmailAddress"
+            android:text="email@test.ru"
             android:visibility="gone" />
 
         <LinearLayout

@@ -46,12 +46,7 @@ class StaffListFragment : Fragment() {
         },
             { position ->
                 deleteStaff(position)
-            }/*,
-            object : Runnable {
-                override fun run() {
-//                    binding.staffList.scrollToPosition(0)
-                }
-            }*/)
+            })
         with(binding.staffList) {
             adapter = staffAdapter
             initLinearLayout(this)
@@ -82,7 +77,6 @@ class StaffListFragment : Fragment() {
 
     private fun addStaff() {
         staffViewModel.addStaff()
-//        binding.staffList.scrollToPosition(0)
         updateEmptyTextView()
     }
 
