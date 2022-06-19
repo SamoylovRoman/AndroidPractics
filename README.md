@@ -1,2 +1,2 @@
-# ReviewsByDenis
-reviews by Denis Sannikov
+# AndroidPractics
+Android practics projects
