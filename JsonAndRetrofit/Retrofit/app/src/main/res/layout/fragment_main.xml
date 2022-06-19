@@ -7,6 +7,12 @@
     android:padding="8dp">
 
     <Button
+        android:id="@+id/coroutineButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Корутины" />
+
+    <Button
         android:id="@+id/currentUserInfoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
