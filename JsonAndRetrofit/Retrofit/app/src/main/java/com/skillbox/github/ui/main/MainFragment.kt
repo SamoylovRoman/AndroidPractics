@@ -31,8 +31,5 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.repositoryListButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToRepositoryListFragment())
         }
-        binding.coroutineButton.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToBaseCoroutineFragment())
-        }
     }
 }
