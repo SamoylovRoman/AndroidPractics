@@ -5,10 +5,6 @@ import retrofit2.http.*
 
 interface GithubApi {
 
-/*    @GET("/user")
-    fun searchUser(
-    ): Call<RemoteUser>*/
-
     @GET("/user")
     suspend fun searchUserInfo(
     ): RemoteUser
