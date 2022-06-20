@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Coroutines and retrofit</string>
+    <string name="main_profile">Профиль</string>
+    <string name="main_repositories">Список репозиториев</string>
+    <string name="auth_login">Войти</string>
+    <string name="auth_canceled">Аутентификация не выполнена</string>
+    <string name="text_avatar_image">Avatar image</string>
+    <string name="text_repositories">PUBLIC REPOSITORIES:</string>
+    <string name="owner_avatar">Owner avatar</string>
+    <string name="repo_detail_info">REPO DETAIL INFO</string>
+    <string name="owner">Owner: %s</string>
+    <string name="repo_name">Repo name:</string>
+    <string name="owner_image">Owner image</string>
+    <string name="click_to_star_unstar_bellow">Click to star/unstar bellow:</string>
+    <string name="starred">starred</string>
+    <string name="not_starred">not starred</string>
+    <string name="set_new_company">Set new company</string>
+    <string name="enter_new_company">Enter new company</string>
+    <string name="new_company">Enter new company</string>
+    <string name="clear_star">Clear star</string>
+    <string name="avatar_image">Avatar image</string>
+    <string name="user_s_followings">User\'s followings:</string>
+</resources>
