@@ -32,7 +32,7 @@ class CurrentUserViewModel : ViewModel() {
         _isLoading.postValue(false)
     }
 
-    private val scope = CoroutineScope(Dispatchers.Main + exceptionHandler)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main + exceptionHandler)
 
     fun updateCompany(newCompany: String) {
         _isLoading.postValue(true)
