@@ -48,12 +48,13 @@ class CurrentUserViewModel : ViewModel() {
     fun searchUserInfo() {
         _isLoading.postValue(true)
         scope.launch {
-            val userInfo = async {
+            val userInfo = withContext(Dispatchers.Default) {
                 repository.searchUserInfo()
-            }.await()
-            val followingList = async {
-                repository.searchUsersFollowings()
-            }.await()
+            }
+            val followingList =
+                withContext(Dispatchers.Default) {
+                    repository.searchUsersFollowings()
+                }
             _userInfo.postValue(userInfo)
             _followings.postValue(followingList)
             _isLoading.postValue(false)

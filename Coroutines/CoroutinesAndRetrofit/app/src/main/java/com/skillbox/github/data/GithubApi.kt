@@ -10,7 +10,7 @@ interface GithubApi {
     ): RemoteUser
 
     @GET("/repositories")
-    fun searchUserRepositories(): Call<List<RemoteRepo>>
+    suspend fun searchUserRepositories(): List<RemoteRepo>
 
     @GET("/user/starred/{owner}/{repo}")
     fun checkRepoIsStarred(

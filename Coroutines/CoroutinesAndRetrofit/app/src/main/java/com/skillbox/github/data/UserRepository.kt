@@ -1,6 +1,7 @@
 package com.skillbox.github.data
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -114,16 +115,7 @@ class UserRepository {
     }
 
     suspend fun searchRepositories(): List<RemoteRepo> {
-        return withContext(Dispatchers.Default) {
-            suspendCoroutine { continuation ->
-                val response = Networking.githubApi.searchUserRepositories().execute()
-                if (response.isSuccessful) {
-                    continuation.resume(response.body()?.toList().orEmpty())
-                } else {
-                    continuation.resumeWithException(Throwable("Response is not successful"))
-                }
-            }
-        }
+        return Networking.githubApi.searchUserRepositories()
     }
 
     companion object {
