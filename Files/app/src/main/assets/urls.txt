@@ -1,0 +1,3 @@
+https://gitlab.skillbox.ru/learning_materials/android_basic/-/raw/master/README.md
+https://raw.githubusercontent.com/SamoylovRoman/AndroidPractics/main/Files/README.md
+https://raw.githubusercontent.com/SamoylovRoman/AndroidPractics/main/JsonAndRetrofit/Retrofit/README.md
