@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.android.practice.files.R
 import com.android.practice.files.databinding.FragmentDownloadBinding
 import com.android.practice.files.presentation.extensions.showToast
+import com.android.practice.files.presentation.utils.ViewModelFactory
 import com.android.practice.files.presentation.view_models.DownloadViewModel
 
 class DownloadFragment : Fragment() {
@@ -19,7 +20,7 @@ class DownloadFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentDownloadBinding
-    private val viewModel: DownloadViewModel by viewModels()
+    private val viewModel: DownloadViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

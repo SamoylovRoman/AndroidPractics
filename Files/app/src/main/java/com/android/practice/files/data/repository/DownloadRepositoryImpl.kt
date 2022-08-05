@@ -34,33 +34,32 @@ class DownloadRepositoryImpl(private val context: Context) : DownloadRepository 
         } catch (t: Throwable) {
             Log.e("Try to load file: ", "${t.message}")
             file.delete()
+            return@withContext false
         }
         return@withContext true
     }
 
     // download all start files with first start
     override suspend fun downloadStartFiles() {
-        if (checkFirstStart()) {
-            try {
-                withContext(Dispatchers.IO) {
-                    context.resources.assets.open(ASSETS_URLS_FILE_NAME)
-                        .bufferedReader()
-                        .use { bufReader ->
-                            bufReader.readLines().forEach { url ->
-                                downloadFile(url = url)
-                            }
+        try {
+            withContext(Dispatchers.IO) {
+                context.resources.assets.open(ASSETS_URLS_FILE_NAME)
+                    .bufferedReader()
+                    .use { bufReader ->
+                        bufReader.readLines().forEach { url ->
+                            downloadFile(url = url)
                         }
-                }
-                sharedPrefs.edit().putBoolean(FIRST_START, false).apply()
-            } catch (t: Throwable) {
-                Log.e("Try to download start files: ", "${t.message}")
+                    }
             }
+            sharedPrefs.edit().putBoolean(FIRST_START, false).apply()
+        } catch (t: Throwable) {
+            Log.e("Try to download start files: ", "${t.message}")
         }
         return
     }
 
     // check if the first application start
-    private fun checkFirstStart(): Boolean {
+    override fun checkFirstStart(): Boolean {
         return sharedPrefs.getBoolean(FIRST_START, true)
     }
 

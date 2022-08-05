@@ -1,14 +1,15 @@
 package com.android.practice.files.presentation.view_models
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.android.practice.files.data.repository.DownloadRepositoryImpl
+import com.android.practice.files.domain.usecases.DownloadFileUseCase
+import com.android.practice.files.domain.usecases.DownloadStartFilesUseCase
 import com.android.practice.files.presentation.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
-class DownloadViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = DownloadRepositoryImpl(application)
+class DownloadViewModel(
+    private val downloadFileUseCase: DownloadFileUseCase,
+    private val downloadStartFilesUseCase: DownloadStartFilesUseCase
+) : ViewModel() {
 
     private var _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
@@ -21,8 +22,8 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
     fun loadFile(url: String) {
         viewModelScope.launch {
             _isLoading.postValue(true)
-            if (!repository.checkFileIsDownloaded(url)) {
-                repository.downloadFile(url)
+            if (!downloadFileUseCase.checkFileIsDownloaded(url)) {
+                downloadFileUseCase.downloadFile(url)
             } else {
                 _showToast.postValue(Unit)
             }
@@ -33,7 +34,7 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
     fun downloadStartFiles() {
         viewModelScope.launch {
             _isLoading.postValue(true)
-            repository.downloadStartFiles()
+            downloadStartFilesUseCase.downloadStartFiles()
             _isLoading.postValue(false)
         }
     }

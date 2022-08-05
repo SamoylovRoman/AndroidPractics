@@ -7,4 +7,6 @@ interface DownloadRepository {
     suspend fun downloadStartFiles()
 
     fun checkFileIsDownloaded(url: String): Boolean
+
+    fun checkFirstStart(): Boolean
 }
