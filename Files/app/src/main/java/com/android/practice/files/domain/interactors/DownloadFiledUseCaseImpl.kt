@@ -9,7 +9,7 @@ class DownloadFiledUseCaseImpl(private val repository: DownloadRepository) : Dow
         return repository.downloadFile(url)
     }
 
-    override fun checkFileIsDownloaded(url: String): Boolean {
+    override suspend fun checkFileIsDownloaded(url: String): Boolean {
         return repository.checkFileIsDownloaded(url)
     }
 }

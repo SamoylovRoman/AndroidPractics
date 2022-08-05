@@ -4,14 +4,15 @@ import android.content.Context
 import android.os.Environment
 import android.util.Log
 import com.android.practice.files.data.network.Networking
+import com.android.practice.files.data.repository.storage.Storage
 import com.android.practice.files.domain.repository.DownloadRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
-class DownloadRepositoryImpl(private val context: Context) : DownloadRepository {
+class DownloadRepositoryImpl(private val context: Context, private val storage: Storage) :
+    DownloadRepository {
 
-    private val sharedPrefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
     private val filesFolder = context.getExternalFilesDir(FOLDER_NAME)
 
     // download file in external storage
@@ -51,7 +52,7 @@ class DownloadRepositoryImpl(private val context: Context) : DownloadRepository 
                         }
                     }
             }
-            sharedPrefs.edit().putBoolean(FIRST_START, false).apply()
+            storage.saveFirstStartFlag()
         } catch (t: Throwable) {
             Log.e("Try to download start files: ", "${t.message}")
         }
@@ -59,26 +60,22 @@ class DownloadRepositoryImpl(private val context: Context) : DownloadRepository 
     }
 
     // check if the first application start
-    override fun checkFirstStart(): Boolean {
-        return sharedPrefs.getBoolean(FIRST_START, true)
+    override suspend fun checkFirstStart(): Boolean {
+        return storage.checkFirstStart()
     }
 
     // check if file is already loaded
-    override fun checkFileIsDownloaded(url: String): Boolean {
-        return sharedPrefs.getString(url, null) != null
+    override suspend fun checkFileIsDownloaded(url: String): Boolean {
+        return storage.checkFileIsDownloaded(url = url)
     }
 
     // save file info in shared preferences
-    private fun saveFileInfo(url: String, fileName: String) {
-        sharedPrefs.edit()
-            .putString(url, fileName)
-            .apply()
+    private suspend fun saveFileInfo(url: String, fileName: String) {
+        storage.saveFileInfo(url = url, fileName = fileName)
     }
 
     companion object {
-        private const val SHARED_PREFS_NAME = "Shared_prefs_name"
         private const val FOLDER_NAME = "files_folder"
-        private const val FIRST_START = "first_start"
         private const val ASSETS_URLS_FILE_NAME = "urls.txt"
     }
 }

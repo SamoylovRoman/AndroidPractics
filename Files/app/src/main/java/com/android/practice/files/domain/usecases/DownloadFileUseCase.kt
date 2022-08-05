@@ -4,5 +4,5 @@ interface DownloadFileUseCase {
 
     suspend fun downloadFile(url: String): Boolean
 
-    fun checkFileIsDownloaded(url: String): Boolean
+    suspend fun checkFileIsDownloaded(url: String): Boolean
 }
