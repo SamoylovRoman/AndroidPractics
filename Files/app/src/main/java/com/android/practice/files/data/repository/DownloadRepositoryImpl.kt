@@ -44,7 +44,7 @@ class DownloadRepositoryImpl(private val context: Context, private val storage: 
     override suspend fun downloadStartFiles() {
         try {
             withContext(Dispatchers.IO) {
-                context.resources.assets.open(ASSETS_URLS_FILE_NAME)
+                OpenAssetsFileUtils().openAssetsFile(context, ASSETS_URLS_FILE_NAME)
                     .bufferedReader()
                     .use { bufReader ->
                         bufReader.readLines().forEach { url ->

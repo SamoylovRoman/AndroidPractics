@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.firstOrNull
 
 class DataStoreStorageImpl(private val context: Context) : Storage {
 
@@ -13,22 +12,20 @@ class DataStoreStorageImpl(private val context: Context) : Storage {
 
     override suspend fun saveFirstStartFlag() {
         context.dataStore.edit {
-            it[KEY] = FIRST_APP_START_KEY
+            it[stringPreferencesKey(FIRST_APP_START_KEY)] = false.toString()
         }
     }
 
     override suspend fun checkFirstStart(): Boolean {
-        return context.dataStore.data
-            .map {
-                it[KEY]
-            }.first().toBoolean()
+        val isFirstStart = context.dataStore.data
+            .firstOrNull()?.get(stringPreferencesKey(FIRST_APP_START_KEY))
+        return isFirstStart == null
     }
 
     override suspend fun checkFileIsDownloaded(url: String): Boolean {
-        return context.dataStore.data
-            .map {
-                it[stringPreferencesKey(url)]
-            }.first().toBoolean()
+        val fileName = context.dataStore.data
+            .firstOrNull()?.get(stringPreferencesKey(url))
+        return fileName != null
     }
 
     override suspend fun saveFileInfo(url: String, fileName: String) {
@@ -39,7 +36,6 @@ class DataStoreStorageImpl(private val context: Context) : Storage {
 
     companion object {
         private const val DATASTORE_NAME = "data_store_name"
-        private val KEY = stringPreferencesKey("key")
         private const val FIRST_APP_START_KEY = "first_start"
     }
 }

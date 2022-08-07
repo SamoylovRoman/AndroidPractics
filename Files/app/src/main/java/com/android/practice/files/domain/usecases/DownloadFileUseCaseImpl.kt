@@ -1,9 +1,8 @@
-package com.android.practice.files.domain.interactors
+package com.android.practice.files.domain.usecases
 
 import com.android.practice.files.domain.repository.DownloadRepository
-import com.android.practice.files.domain.usecases.DownloadFileUseCase
 
-class DownloadFiledUseCaseImpl(private val repository: DownloadRepository) : DownloadFileUseCase {
+class DownloadFileUseCaseImpl(private val repository: DownloadRepository) : DownloadFileUseCase {
 
     override suspend fun downloadFile(url: String): Boolean {
         return repository.downloadFile(url)
