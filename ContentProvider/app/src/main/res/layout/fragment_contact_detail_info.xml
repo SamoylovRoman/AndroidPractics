@@ -1,13 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.contact_detail_info.ContactDetailInfoFragment">
+    android:orientation="vertical">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            tools:context=".presentation.contact_detail_info.ContactDetailInfoFragment">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contactName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Иванов Иван" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12dp"
+                android:text="@string/phones_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/phonesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="+79232333333\n+79999234433\n+79139135512" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12dp"
+                android:text="@string/emails_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/emailsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="mail@mail.ru\n+second@gmail.com" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/delete_contact"
+        android:src="@drawable/ic_delete_forever"
+        app:maxImageSize="40dp" />
+</LinearLayout>

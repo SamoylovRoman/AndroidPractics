@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ContentProvider</string>
+    <string name="add_contact">Add contact</string>
+    <string name="contacts_list">Список контактов</string>
+    <string name="phones_text">Номера телефонов:</string>
+    <string name="emails_text">Адреса электронной почты:</string>
+    <string name="delete_contact">Delete contact</string>
+    <string name="reading_is_prohibited">Contacts reading is prohibited</string>
+    <string name="allow_contacts_reading">To continue working, allow reading contacts in the settings</string>
 </resources>

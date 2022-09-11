@@ -3,11 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.contacts_list.ContactsListFragment">
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contactsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        tools:itemCount="20"
+        tools:listitem="@layout/contact_item" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addContactButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="12dp"
+        android:text="@string/add_contact" />
 
 </FrameLayout>
