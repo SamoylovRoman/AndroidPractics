@@ -17,7 +17,7 @@ class ContactsListViewModel(private val downloadContactsListUseCase: DownloadCon
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    private val _contactsInList = MutableLiveData<List<ContactInListVO>>()
+    private val _contactsInList = MutableLiveData<List<ContactInListVO>>(emptyList())
     val contactsInList: LiveData<List<ContactInListVO>>
         get() = _contactsInList
 

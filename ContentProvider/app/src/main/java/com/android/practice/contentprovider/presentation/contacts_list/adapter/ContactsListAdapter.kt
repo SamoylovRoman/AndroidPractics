@@ -10,26 +10,11 @@ import com.android.practice.contentprovider.databinding.ContactItemBinding
 import com.android.practice.contentprovider.presentation.view_objects.ContactInListVO
 
 class ContactsListAdapter(
-    private val onItemClicked: (Long) -> Unit
+    private val onItemClick: (Long) -> Unit
 ) :
-    ListAdapter<ContactInListVO, ContactsListAdapter.ViewHolder>(DiffUtilCallback()) {
+    ListAdapter<ContactInListVO, ContactsListAdapter.Holder>(ContactDiffUtilCallback) {
 
-    inner class ViewHolder(private val binding: ContactItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(contact: ContactInListVO) {
-            with(binding) {
-                contactName.text = "${contact.name}"
-                phoneNumber.text = contact.phonesString
-                root.setOnClickListener {
-                    onItemClicked(contact.id)
-                }
-            }
-            Log.d("AAA", "Bind: ${contact.name}: ${contact.phonesString}")
-        }
-    }
-
-    class DiffUtilCallback : DiffUtil.ItemCallback<ContactInListVO>() {
+    private object ContactDiffUtilCallback : DiffUtil.ItemCallback<ContactInListVO>() {
         override fun areItemsTheSame(oldItem: ContactInListVO, newItem: ContactInListVO): Boolean {
             return oldItem.id == newItem.id
         }
@@ -42,16 +27,46 @@ class ContactsListAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(
+    class Holder(
+        private val binding: ContactItemBinding,
+        private val onItemClicked: (Long) -> Unit
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        private var personId: Long? = null
+
+        init {
+            binding.root.setOnClickListener { _ ->
+                personId?.let {
+                    onItemClicked(it)
+                }
+            }
+
+        }
+
+        fun bind(contact: ContactInListVO) {
+            personId = contact.id
+            with(binding) {
+                contactName.text = "${contact.name}"
+                phoneNumber.text = contact.phonesString
+
+            }
+            Log.d("AAA", "Bind: ${contact.name}: ${contact.phonesString}")
+        }
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder =
+        Holder(
             ContactItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            onItemClick
         )
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(currentList[position])
     }
 }
