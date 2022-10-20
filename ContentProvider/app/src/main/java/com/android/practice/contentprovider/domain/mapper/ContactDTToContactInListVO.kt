@@ -7,5 +7,5 @@ fun ContactDT.toContactInListVO(): ContactInListVO =
     ContactInListVO(
         id = id,
         name = name,
-        phonesString = phoneNumbers.joinToString("/n")
+        phonesString = phoneNumbers.joinToString("\n")
     )

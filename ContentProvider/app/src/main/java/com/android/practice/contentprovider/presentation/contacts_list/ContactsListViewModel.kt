@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.practice.contentprovider.domain.usecases.DownloadContactsListUseCase
 import com.android.practice.contentprovider.presentation.view_objects.ContactInListVO
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class ContactsListViewModel(private val downloadContactsListUseCase: DownloadContactsListUseCase) :
@@ -17,7 +16,7 @@ class ContactsListViewModel(private val downloadContactsListUseCase: DownloadCon
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    private val _contactsInList = MutableLiveData<List<ContactInListVO>>(emptyList())
+    private val _contactsInList = MutableLiveData<List<ContactInListVO>>()
     val contactsInList: LiveData<List<ContactInListVO>>
         get() = _contactsInList
 

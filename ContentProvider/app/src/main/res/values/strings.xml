@@ -6,5 +6,15 @@
     <string name="emails_text">Адреса электронной почты:</string>
     <string name="delete_contact">Delete contact</string>
     <string name="reading_is_prohibited">Contacts reading is prohibited</string>
+    <string name="writing_is_prohibited">Contacts writing is prohibited</string>
+    <string name="never_ask_reading">To continue work, allow reading contacts in the application settings</string>
+    <string name="never_ask_writing">To continue work, allow writing contacts in the application settings</string>
     <string name="allow_contacts_reading">To continue working, allow reading contacts in the settings</string>
+    <string name="create_contact">Create new contact</string>
+    <string name="enter_name">Enter first name</string>
+    <string name="enter_lastname">Enter lastname</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_e_mail_address">Enter e-mail address</string>
+    <string name="save_new_contact">Save new contact</string>
+    <string name="fill_fields">Please fill all fields!</string>
 </resources>

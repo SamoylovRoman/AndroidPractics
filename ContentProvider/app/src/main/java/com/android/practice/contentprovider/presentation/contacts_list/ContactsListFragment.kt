@@ -43,8 +43,8 @@ class ContactsListFragment : Fragment() {
         initListeners()
         initContactsList()
         bindViewModel()
-        downloadContactsList()
-//        requestContentProviderPermissions()
+//        downloadContactsList()
+        getContactsWithPermissionCheck()
     }
 
     private fun downloadContactsList() {
@@ -52,15 +52,16 @@ class ContactsListFragment : Fragment() {
     }
 
 
-    private fun requestContentProviderPermissions() {
+    private fun getContactsWithPermissionCheck() {
         Handler(Looper.getMainLooper()).post {
             constructPermissionsRequest(
                 android.Manifest.permission.READ_CONTACTS,
                 onShowRationale = ::onContactsPermissionShowRationale,
-                onPermissionDenied = ::onContactPermissionDenied,
-                onNeverAskAgain = ::onContactPermissionNeverAskAgain,
+                onPermissionDenied = { onContactPermissionDenied(android.Manifest.permission.READ_CONTACTS) },
+                onNeverAskAgain = { onContactPermissionNeverAskAgain(android.Manifest.permission.READ_CONTACTS) },
                 requiresPermission = {
                     downloadContactsList()
+//                    viewModel.downloadContactsInList()
                 }
             ).launch()
         }
@@ -70,12 +71,18 @@ class ContactsListFragment : Fragment() {
         request.proceed()
     }
 
-    private fun onContactPermissionDenied() {
-        showToast(R.string.reading_is_prohibited)
+    private fun onContactPermissionDenied(permission: String) {
+        when (permission) {
+            android.Manifest.permission.READ_CONTACTS -> showToast(R.string.reading_is_prohibited)
+            android.Manifest.permission.WRITE_CONTACTS -> showToast(R.string.writing_is_prohibited)
+        }
     }
 
-    private fun onContactPermissionNeverAskAgain() {
-        showToast(R.string.allow_contacts_reading)
+    private fun onContactPermissionNeverAskAgain(permission: String) {
+        when (permission) {
+            android.Manifest.permission.READ_CONTACTS -> showToast(R.string.never_ask_reading)
+            android.Manifest.permission.WRITE_CONTACTS -> showToast(R.string.never_ask_writing)
+        }
     }
 
     private fun bindViewModel() {
@@ -98,7 +105,21 @@ class ContactsListFragment : Fragment() {
 
     private fun initListeners() {
         binding.addContactButton.setOnClickListener {
-            showAddContactFragment()
+//            showAddContactFragment()
+            addContactWithPermissionCheck()
+        }
+    }
+
+    private fun addContactWithPermissionCheck() {
+        Log.d("ContactsFragment", "getContactWithPermissionCheck")
+        Handler(Looper.getMainLooper()).post {
+            constructPermissionsRequest(
+                android.Manifest.permission.WRITE_CONTACTS,
+                onShowRationale = ::onContactsPermissionShowRationale,
+                onPermissionDenied = { onContactPermissionDenied(android.Manifest.permission.WRITE_CONTACTS) },
+                onNeverAskAgain = { onContactPermissionNeverAskAgain(android.Manifest.permission.WRITE_CONTACTS) },
+                requiresPermission = { showAddContactFragment() }
+            ).launch()
         }
     }
 

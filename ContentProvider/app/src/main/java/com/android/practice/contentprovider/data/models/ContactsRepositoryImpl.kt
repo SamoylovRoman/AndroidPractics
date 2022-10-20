@@ -1,13 +1,27 @@
 package com.android.practice.contentprovider.data.models
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
+import android.util.Log
 import com.android.practice.contentprovider.domain.repository.ContactsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.regex.Pattern
 
 class ContactsRepositoryImpl(private val context: Context) : ContactsRepository {
+
+    private val phonePattern = Pattern.compile("^\\+?[0-9]{3}?[0-9]{6,12}\$")
+    private val emailPattern = Pattern.compile(
+        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"
+    )
 
     override suspend fun fetchAllContacts(): List<ContactDT> = withContext(Dispatchers.IO) {
         context.contentResolver.query(
@@ -29,8 +43,24 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         return false
     }
 
-    override suspend fun addContact(contact: ContactDT): Boolean {
-        return false
+    override suspend fun saveContact(name: String, phone: String, email: String) =
+        withContext(Dispatchers.IO) {
+            if (name.isBlank() || !phonePattern.matcher(phone).matches() || (!emailPattern.matcher(
+                    email
+                ).matches() && email.isNotBlank())
+            ) {
+                throw Exception("Incorrect data! Check it!")
+            }
+            val uri = saveRawContact()
+        }
+
+    private fun saveRawContact(): Long {
+        val uri = context.contentResolver.insert(
+            ContactsContract.RawContacts.CONTENT_URI,
+            ContentValues()
+        )
+        Log.d("MyTag (saveRawContact): ", "uri = $uri")
+        return uri?.lastPathSegment?.toLongOrNull() ?: error("Cannot save contact")
     }
 
     private fun getContactsFromCursor(cursor: Cursor): List<ContactDT> {

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enter_name">Enter name</string>
+    <string name="fill_fields">Please fill all fields!</string>
+</resources>

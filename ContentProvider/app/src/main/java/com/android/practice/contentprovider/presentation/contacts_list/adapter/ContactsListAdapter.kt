@@ -41,7 +41,6 @@ class ContactsListAdapter(
                     onItemClicked(it)
                 }
             }
-
         }
 
         fun bind(contact: ContactInListVO) {
