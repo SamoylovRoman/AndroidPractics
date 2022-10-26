@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.practice.contentprovider.R
 import com.android.practice.contentprovider.databinding.FragmentContactsListBinding
 import com.android.practice.contentprovider.presentation.add_contact.AddContactFragment
+import com.android.practice.contentprovider.presentation.contact_detail_info.ContactDetailInfoFragment
 import com.android.practice.contentprovider.presentation.contacts_list.adapter.ContactsListAdapter
 import com.android.practice.contentprovider.presentation.extensions.showToast
 import com.android.practice.contentprovider.presentation.utils.ViewModelFactory
@@ -61,7 +62,20 @@ class ContactsListFragment : Fragment() {
                 onNeverAskAgain = { onContactPermissionNeverAskAgain(android.Manifest.permission.READ_CONTACTS) },
                 requiresPermission = {
                     downloadContactsList()
-//                    viewModel.downloadContactsInList()
+                }
+            ).launch()
+        }
+    }
+
+    private fun addNewContactsWithPermissionCheck() {
+        Handler(Looper.getMainLooper()).post {
+            constructPermissionsRequest(
+                android.Manifest.permission.WRITE_CONTACTS,
+                onShowRationale = ::onContactsPermissionShowRationale,
+                onPermissionDenied = { onContactPermissionDenied(android.Manifest.permission.WRITE_CONTACTS) },
+                onNeverAskAgain = { onContactPermissionNeverAskAgain(android.Manifest.permission.WRITE_CONTACTS) },
+                requiresPermission = {
+                    showAddContactFragment()
                 }
             ).launch()
         }
@@ -105,21 +119,7 @@ class ContactsListFragment : Fragment() {
 
     private fun initListeners() {
         binding.addContactButton.setOnClickListener {
-//            showAddContactFragment()
-            addContactWithPermissionCheck()
-        }
-    }
-
-    private fun addContactWithPermissionCheck() {
-        Log.d("ContactsFragment", "getContactWithPermissionCheck")
-        Handler(Looper.getMainLooper()).post {
-            constructPermissionsRequest(
-                android.Manifest.permission.WRITE_CONTACTS,
-                onShowRationale = ::onContactsPermissionShowRationale,
-                onPermissionDenied = { onContactPermissionDenied(android.Manifest.permission.WRITE_CONTACTS) },
-                onNeverAskAgain = { onContactPermissionNeverAskAgain(android.Manifest.permission.WRITE_CONTACTS) },
-                requiresPermission = { showAddContactFragment() }
-            ).launch()
+            addNewContactsWithPermissionCheck()
         }
     }
 
@@ -146,7 +146,14 @@ class ContactsListFragment : Fragment() {
     }
 
     private fun openContactDetailFragment(contactId: Long) {
-
+        parentFragmentManager.beginTransaction()
+            .replace(
+                R.id.fragmentContainer,
+                ContactDetailInfoFragment.newInstance(contactId = contactId),
+                ContactDetailInfoFragment::class.java.simpleName
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
 }

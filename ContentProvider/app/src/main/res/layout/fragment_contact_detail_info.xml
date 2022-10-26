@@ -36,7 +36,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/phonesList"
+                android:id="@+id/phonesListText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="+79232333333\n+79999234433\n+79139135512" />
@@ -50,7 +50,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/emailsText"
+                android:id="@+id/emailsListText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="mail@mail.ru\n+second@gmail.com" />

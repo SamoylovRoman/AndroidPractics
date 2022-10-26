@@ -20,20 +20,6 @@ class ContactsListViewModel(private val downloadContactsListUseCase: DownloadCon
     val contactsInList: LiveData<List<ContactInListVO>>
         get() = _contactsInList
 
-//    fun downloadContactsInList() {
-//        Log.d("AAA", "View Model downloadContactsInList")
-//        _isLoading.postValue(true)
-//        viewModelScope.launch {
-//            var newList = listOf<ContactInListVO>()
-//                val newListAsync = async { downloadContactsListUseCase.downloadContacts() }
-//                newList = newListAsync.await()
-////                newList.forEach { Log.d("AAA","${it.name}") }
-//            newList.forEach { Log.d("AAA","${it.name}") }
-//            _contactsInList.postValue(newList)
-//        }
-//        _isLoading.postValue(false)
-//    }
-
     fun downloadContactsInList() {
         Log.d("AAA", "View Model downloadContactsInList")
         viewModelScope.launch {

@@ -5,7 +5,7 @@ import com.android.practice.contentprovider.domain.repository.ContactsRepository
 class SaveNewContactUseCaseImpl(private val repository: ContactsRepository) :
     SaveNewContactUseCase {
 
-    override suspend fun saveNewContact(name: String, phone: String, email: String) {
-        return repository.saveContact(name, phone, email)
+    override suspend fun saveNewContact(name: String, phones: List<String>, emails: List<String>) {
+        return repository.saveContact(name, phones, emails)
     }
 }

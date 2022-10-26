@@ -18,7 +18,7 @@ class AddContactFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentAddContactBinding
-    private val viewModel: AddContactViewModel by viewModels() {
+    private val viewModel: AddContactViewModel by viewModels {
         ViewModelFactory(requireContext())
     }
 
@@ -41,9 +41,10 @@ class AddContactFragment : Fragment() {
                 if (fieldsAreFilled()) {
                     viewModel.saveNewContact(
                         "${firstNameText.editText?.text} ${lastNameText.editText?.text}",
-                        phoneNumberText.editText?.text.toString(),
-                        emailAddressText.editText?.text.toString()
+                        listOf(phoneNumberText.editText?.text.toString()),
+                        listOf(emailAddressText.editText?.text.toString())
                     )
+                    parentFragmentManager.popBackStack()
                 } else {
                     showToast(R.string.fill_fields)
                 }

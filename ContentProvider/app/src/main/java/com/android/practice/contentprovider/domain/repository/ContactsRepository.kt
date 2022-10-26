@@ -10,5 +10,9 @@ interface ContactsRepository {
 
     suspend fun removeContact(id: Long): Boolean
 
-    suspend fun saveContact(name: String, phone: String, email: String = "")
+    suspend fun saveContact(
+        name: String,
+        phones: List<String>,
+        emails: List<String> = emptyList()
+    )
 }

@@ -35,23 +35,45 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         }.orEmpty()
     }
 
-    override suspend fun fetchContactDetails(id: Long): ContactDT {
-        return ContactDT(1234567, "null", emptyList(), emptyList())
+    override suspend fun fetchContactDetails(id: Long): ContactDT = withContext(Dispatchers.IO) {
+        val nameIndex: Int
+        var name = ""
+        context.contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            null,
+            ContactsContract.Contacts._ID + " = ?",
+            arrayOf("$id"),
+            null
+        )?.use {
+            it.columnNames.forEach { str ->
+                Log.d("ContactDetail: columnNames = ", str)
+            }
+            nameIndex = it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+            Log.d("ContactDetail: nameIndex = ", "$nameIndex")
+            name = it.getString(nameIndex).orEmpty()
+            Log.d("ContactDetail: name = ", "$nameIndex")
+        }
+        ContactDT(id = id, name = name, getPhonesForContact(id), getEmailsForContact(id))
     }
 
     override suspend fun removeContact(id: Long): Boolean {
         return false
     }
 
-    override suspend fun saveContact(name: String, phone: String, email: String) =
+    override suspend fun saveContact(name: String, phones: List<String>, emails: List<String>) =
         withContext(Dispatchers.IO) {
-            if (name.isBlank() || !phonePattern.matcher(phone).matches() || (!emailPattern.matcher(
-                    email
-                ).matches() && email.isNotBlank())
+            if (name.isBlank() || !phones.all {
+                    phonePattern.matcher(it).matches()
+                } || (!emails.all { emailPattern.matcher(it).matches() } && emails.isNotEmpty())
             ) {
                 throw Exception("Incorrect data! Check it!")
             }
-            val uri = saveRawContact()
+            val contactId = saveRawContact()
+            saveContactName(contactId, name)
+            saveContactPhones(contactId, phones)
+            if (emails.isNotEmpty()) {
+                saveContactEmails(contactId, emails)
+            }
         }
 
     private fun saveRawContact(): Long {
@@ -61,6 +83,46 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         )
         Log.d("MyTag (saveRawContact): ", "uri = $uri")
         return uri?.lastPathSegment?.toLongOrNull() ?: error("Cannot save contact")
+    }
+
+    private fun saveContactName(contactId: Long, name: String) {
+        val contentValues = ContentValues().apply {
+            put(ContactsContract.Data.RAW_CONTACT_ID, contactId)
+            put(
+                ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
+            )
+            put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name)
+        }
+        context.contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues)
+    }
+
+    private fun saveContactPhones(contactId: Long, phones: List<String>) {
+        val contentValues = ContentValues().apply {
+            put(ContactsContract.Data.RAW_CONTACT_ID, contactId)
+            put(
+                ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+            )
+            for (number in phones) {
+                put(ContactsContract.CommonDataKinds.Phone.NUMBER, number)
+            }
+        }
+        context.contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues)
+    }
+
+    private fun saveContactEmails(contactId: Long, emails: List<String>) {
+        val contentValues = ContentValues().apply {
+            put(ContactsContract.Data.RAW_CONTACT_ID, contactId)
+            put(
+                ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE
+            )
+            for (email in emails) {
+                put(ContactsContract.CommonDataKinds.Email.ADDRESS, email)
+            }
+        }
+        context.contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues)
     }
 
     private fun getContactsFromCursor(cursor: Cursor): List<ContactDT> {
@@ -95,6 +157,18 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         }.orEmpty()
     }
 
+    private fun getEmailsForContact(contactId: Long): List<String> {
+        return context.contentResolver.query(
+            ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+            null,
+            "${ContactsContract.CommonDataKinds.Email.CONTACT_ID} = ?",
+            arrayOf(contactId.toString()),
+            null
+        )?.use {
+            getEmailsFromCursor(it)
+        }.orEmpty()
+    }
+
     private fun getPhonesFromCursor(cursor: Cursor): List<String> {
         if (cursor.moveToFirst().not()) return emptyList()
         val phonesList = mutableListOf<String>()
@@ -106,4 +180,14 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         return phonesList
     }
 
+    private fun getEmailsFromCursor(cursor: Cursor): List<String> {
+        if (cursor.moveToFirst().not()) return emptyList()
+        val emailsList = mutableListOf<String>()
+        do {
+            val numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS)
+            val phone = cursor.getString(numberIndex)
+            emailsList.add(phone)
+        } while (cursor.moveToNext())
+        return emailsList
+    }
 }

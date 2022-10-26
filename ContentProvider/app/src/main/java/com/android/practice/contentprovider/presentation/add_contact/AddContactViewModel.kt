@@ -8,10 +8,10 @@ import kotlinx.coroutines.launch
 
 class AddContactViewModel(private val saveNewContactUseCase: SaveNewContactUseCase) : ViewModel() {
 
-    fun saveNewContact(name: String, phone: String, email: String = "") {
+    fun saveNewContact(name: String, phones: List<String>, emails: List<String> = emptyList()) {
         viewModelScope.launch {
             try {
-                saveNewContactUseCase.saveNewContact(name, phone, email)
+                saveNewContactUseCase.saveNewContact(name, phones, emails)
             } catch (t: Throwable) {
                 Log.d("Error: ", "${t.message}")
             }
