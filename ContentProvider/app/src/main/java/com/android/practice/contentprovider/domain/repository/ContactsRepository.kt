@@ -10,6 +10,8 @@ interface ContactsRepository {
 
     suspend fun removeContact(id: Long): Boolean
 
+    suspend fun getEmailsStringByContactId(contactId: Long): String
+
     suspend fun saveContact(
         name: String,
         phones: List<String>,

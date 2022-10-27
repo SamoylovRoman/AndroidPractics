@@ -60,6 +60,11 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         return false
     }
 
+    override suspend fun getEmailsStringByContactId(contactId: Long): String =
+        withContext(Dispatchers.IO) {
+            getEmailsForContact(contactId).joinToString("\n")
+        }
+
     override suspend fun saveContact(name: String, phones: List<String>, emails: List<String>) =
         withContext(Dispatchers.IO) {
             if (name.isBlank() || !phones.all {
@@ -157,6 +162,17 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         }.orEmpty()
     }
 
+    private fun getPhonesFromCursor(cursor: Cursor): List<String> {
+        if (cursor.moveToFirst().not()) return emptyList()
+        val phonesList = mutableListOf<String>()
+        do {
+            val numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val phone = cursor.getString(numberIndex)
+            phonesList.add(phone)
+        } while (cursor.moveToNext())
+        return phonesList
+    }
+
     private fun getEmailsForContact(contactId: Long): List<String> {
         return context.contentResolver.query(
             ContactsContract.CommonDataKinds.Email.CONTENT_URI,
@@ -167,17 +183,6 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
         )?.use {
             getEmailsFromCursor(it)
         }.orEmpty()
-    }
-
-    private fun getPhonesFromCursor(cursor: Cursor): List<String> {
-        if (cursor.moveToFirst().not()) return emptyList()
-        val phonesList = mutableListOf<String>()
-        do {
-            val numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-            val phone = cursor.getString(numberIndex)
-            phonesList.add(phone)
-        } while (cursor.moveToNext())
-        return phonesList
     }
 
     private fun getEmailsFromCursor(cursor: Cursor): List<String> {

@@ -136,7 +136,8 @@ class ContactsListFragment : Fragment() {
 
     private fun initContactsList() {
         contactsListAdapter = ContactsListAdapter { contactId ->
-            openContactDetailFragment(contactId)
+            val contact = contactsListAdapter.currentList.find { it.id == contactId }
+            openContactDetailFragment(contactId, contact?.name ?: "", contact?.phonesString ?: "")
         }
         with(binding.contactsList) {
             adapter = contactsListAdapter
@@ -145,11 +146,19 @@ class ContactsListFragment : Fragment() {
         }
     }
 
-    private fun openContactDetailFragment(contactId: Long) {
+    private fun openContactDetailFragment(
+        contactId: Long,
+        contactName: String,
+        contactPhonesString: String
+    ) {
         parentFragmentManager.beginTransaction()
             .replace(
                 R.id.fragmentContainer,
-                ContactDetailInfoFragment.newInstance(contactId = contactId),
+                ContactDetailInfoFragment.newInstance(
+                    contactId = contactId,
+                    contactName = contactName,
+                    contactPhonesString = contactPhonesString
+                ),
                 ContactDetailInfoFragment::class.java.simpleName
             )
             .addToBackStack(null)

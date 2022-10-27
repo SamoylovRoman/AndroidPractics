@@ -9,4 +9,8 @@ class GetContactDetailUseCaseImpl(private val repository: ContactsRepository) :
     override suspend fun getContactDetail(id: Long): ContactDetailVO {
         return repository.fetchContactDetails(id).toContactDetailVO()
     }
+
+    override suspend fun getEmailsStringByContactId(contactId: Long): String {
+        return repository.getEmailsStringByContactId(contactId)
+    }
 }

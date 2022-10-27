@@ -16,10 +16,24 @@ class ContactDetailInfoViewModel(private val getContactDetailUseCase: GetContact
     val contactDetail: LiveData<ContactDetailVO>
         get() = _contactDetail
 
+    private val _contactEmailsString = MutableLiveData<String>()
+    val contactEmailsString: LiveData<String>
+        get() = _contactEmailsString
+
     fun getContactDetail(id: Long) {
         viewModelScope.launch {
             try {
                 _contactDetail.postValue(getContactDetailUseCase.getContactDetail(id))
+            } catch (t: Throwable) {
+                Log.d("Error: ", "${t.message}")
+            }
+        }
+    }
+
+    fun getEmailsStringByContactId(id: Long) {
+        viewModelScope.launch {
+            try {
+                _contactEmailsString.postValue(getContactDetailUseCase.getEmailsStringByContactId(id))
             } catch (t: Throwable) {
                 Log.d("Error: ", "${t.message}")
             }

@@ -5,4 +5,6 @@ import com.android.practice.contentprovider.presentation.view_objects.ContactDet
 interface GetContactDetailUseCase {
 
     suspend fun getContactDetail(id: Long): ContactDetailVO
+
+    suspend fun getEmailsStringByContactId(contactId: Long): String
 }
