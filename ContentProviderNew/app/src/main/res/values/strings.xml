@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">ContentProviderNew</string>
+    <string name="contact_list_title">Contacts list</string>
+    <string name="contact_list_permission_denied">Contacts reading is prohibited</string>
+    <string name="contact_list_permission_never_ask_again">To continue working, allow reading contacts in the settings</string>
+    <string name="cannot_be_deleted">Current contact cannot be deleted!</string>
+    <string name="writing_is_prohibited">Contacts writing is prohibited</string>
+    <string name="never_ask_writing">To continue work, allow writing contacts in the application settings</string>
+    <string name="contact_add_title">Добавление контакта</string>
+    <string name="contact_add_name_hint">Имя</string>
+    <string name="contact_add_phone_hint">Телефон</string>
+    <string name="contact_add_save">Добавить</string>
+    <string name="contact_add_save_error">Ошибка добавления контакта</string>
+    <string name="contact_add_save_error_form">Форма заполнена неверно</string>
+    <string name="contact_add_permission_denied">Доступ к записи контактов запрещен</string>
+    <string name="contact_add_permission_never_ask_again">Разрешите доступ к чтению контактов в настройках приложения</string>
+    <string name="delete_button">Удалить контакт</string>
+    <string name="is_not_deleted">Filed to delete contact</string>
+    <string name="contact_add_email_hint">Електронная почта</string>
+    <string name="add_contact">Add contact</string>
+    <string name="contacts_list">Список контактов</string>
+    <string name="phones_text">Номера телефонов:</string>
+    <string name="emails_text">Адреса электронной почты:</string>
+    <string name="delete_contact">Delete contact</string>
+    <string name="reading_is_prohibited">Contacts reading is prohibited</string>
+
+    <string name="never_ask_reading">To continue work, allow reading contacts in the application settings</string>
+
+    <string name="allow_contacts_reading">To continue working, allow reading contacts in the settings</string>
+    <string name="create_contact">Create new contact</string>
+    <string name="enter_name">Enter first name</string>
+    <string name="enter_lastname">Enter lastname</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_e_mail_address">Enter e-mail address</string>
+    <string name="save_new_contact">Save new contact</string>
+    <string name="fill_fields">Please fill all fields!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="current_contact_is_removed">Current contact is removed</string>
+    <string name="to_remove_contact">Do you want to remove current contact?</string>
 </resources>

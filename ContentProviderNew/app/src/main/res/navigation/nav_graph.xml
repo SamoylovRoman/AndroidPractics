@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/contactsListFragment">
+    <fragment
+        android:id="@+id/contactsListFragment"
+        android:name="com.android.practice.contentprovidernew.presentation.contacts_list.ContactsListFragment"
+        tools:layout="@layout/fragment_contacts_list"
+        android:label="ContactsListFragment" >
+        <action
+            android:id="@+id/action_contactsListFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+        <action
+            android:id="@+id/action_contactsListFragment_to_contactDetailsFragment"
+            app:destination="@id/contactDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="com.android.practice.contentprovidernew.presentation.add_contact.AddContactFragment"
+        android:label="fragment_add_contact"
+        tools:layout="@layout/fragment_add_contact" />
+    <fragment
+        android:id="@+id/contactDetailsFragment"
+        android:name="com.android.practice.contentprovidernew.presentation.contact_details.ContactDetailsFragment"
+        android:label="ContactDetailsFragment"
+        tools:layout="@layout/fragment_contact_details">
+        <argument
+            android:name="contact"
+            app:argType="com.android.practice.contentprovidernew.presentation.view_objects.ContactVO"
+            app:nullable="true" />
+    </fragment>
+</navigation>
