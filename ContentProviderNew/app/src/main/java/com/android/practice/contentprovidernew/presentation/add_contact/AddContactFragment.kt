@@ -21,8 +21,13 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolBar()
         initListeners()
         bindViewModel()
+    }
+
+    private fun initToolBar() {
+        binding.appBar.toolbar.setTitle(R.string.create_contact)
     }
 
     private fun bindViewModel() {

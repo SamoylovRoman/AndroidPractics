@@ -22,10 +22,15 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolBar()
         if (args.contact != null)
             bindContactDetails(args.contact!!)
         initListeners()
         bindViewModel()
+    }
+
+    private fun initToolBar() {
+        binding.appBar.toolbar.setTitle(R.string.details)
     }
 
     private fun initListeners() {
