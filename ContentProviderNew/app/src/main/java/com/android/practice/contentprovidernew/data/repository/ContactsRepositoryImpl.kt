@@ -22,7 +22,7 @@ class ContactsRepositoryImpl(private val context: Context) : ContactsRepository 
             null,
             null,
             null,
-            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
+            null
         )?.use {
             getContactsFromCursor(it)
         }.orEmpty()

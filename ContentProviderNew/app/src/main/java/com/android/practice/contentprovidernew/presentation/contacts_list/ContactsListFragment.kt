@@ -30,8 +30,8 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
         super.onViewCreated(view, savedInstanceState)
         initToolBar()
         initContactsList()
-        bindViewModel()
         initListeners()
+        bindViewModel()
         getContactsWithPermissionCheck()
     }
 
