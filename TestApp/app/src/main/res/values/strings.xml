@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TestApp</string>
+    <string name="no_courses">No courses</string>
+    <string name="to_remove_course">Do you want to remove this course?</string>
+    <string name="error">Error!</string>
+    <string name="add_course">Add course</string>
+    <string name="delete_all_course">Delete all course</string>
+    <string name="course_title">Course title:</string>
+</resources>

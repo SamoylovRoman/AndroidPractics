@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/coursesListFragment">
+
+    <fragment
+        android:id="@+id/coursesListFragment"
+        android:name="com.android.practice.testapp.presentation.courses_list.CoursesListFragment"
+        android:label="fragment_courses_list"
+        tools:layout="@layout/fragment_courses_list" />
+</navigation>
